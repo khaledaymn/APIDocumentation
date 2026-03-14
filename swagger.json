@@ -5,7 +5,7 @@
     "description": "### 🌐 Project Overview\nThe **Portfolio Dashboard API** is a high-performance administrative engine designed to manage a professional developer's portfolio. It serves as a centralized CMS that handles complex data relations, localized content, and automated asset orchestration.\n\n#### 🚀 Core System Architecture\n* **Hybrid Media Management**: Intelligent routing of assets where high-bandwidth media (Images/Video) is served via **Cloudinary CDN**, while documents (PDF/Docs) are managed via **Local Secure Storage**.\n* **Engineering Case-Studies**: A sophisticated project module that tracks **Technical Challenges**, **Architecture Design**, **ROI statistics**, and the full **Project Lifecycle**.\n* **Bilingual Content Flow**: Native support for **Multi-language (EN/AR)** content delivery, fully controlled via the `Accept-Language` header.\n* **Data Integrity**: Implementation of the **Unit of Work** and **Repository Pattern** to ensure atomic transactions between the SQL database and physical file systems.\n\n#### 🔑 Security & Authentication\nAdministrative access is strictly protected. Management endpoints require a **Bearer JWT Token** issued by the Identity module. The system enforces ownership checks on all data mutation requests.",
     "contact": {
       "name": "Khaled Ayman",
-      "url": "https://github.com/KhaledAyman",
+      "url": "https://github.com/khaledaymn",
       "email": "khaled654ayman0@gmail.com"
     },
     "version": "v1"
