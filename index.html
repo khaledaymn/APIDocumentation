@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Dashboard | API Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; }
+        .branding-header {
+            background-color: #ffffff;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .branding-header h1 {
+            color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+        .status-badge {
+            background: #f0f9ff;
+            color: #0284c7;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid #e0f2fe;
+        }
+        .redoc-container .right-panel {
+            display: none !important;
+        }
+        .redoc-container .center-panel {
+            width: 100% !important;
+            max-width: unset !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="branding-header">
+        <h1>Portfolio <span style="color: #0ea5e9; font-weight: 400;">Dashboard API</span></h1>
+        <div class="status-badge">v1.0.0 - STABLE</div>
+    </header>
+
+    <div id="redoc-container"></div>
+
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+
+    <script>
+        Redoc.init('swagger.json', {
+            scrollYOffset: 65,
+            hideDownloadButton: true,
+            theme: {
+                colors: {
+                    primary: { main: '#0ea5e9' },
+                    text: { primary: '#1e293b' }
+                },
+                sidebar: {
+                    backgroundColor: '#f1f5f9', 
+                    textColor: '#64748b',
+                    activeTextColor: '#0ea5e9',
+                    width: '260px',
+                    borderRight: '1px solid #e2e8f0'
+                },
+                rightPanel: {
+                    backgroundColor: '#1e293b', 
+                    width: '40%' ,
+                },
+                typography: {
+                    fontSize: '15px',
+                    fontFamily: '"Inter", sans-serif',
+                    headings: { fontWeight: '600' }
+                }
+            },
+            expandSingleSchemaField: true,
+            requiredPropsFirst: true,
+            pathInMiddlePanel: true,
+            expandSingleSchemaField: true,
+            requiredPropsFirst: true
+        }, document.getElementById('redoc-container'));
+    </script>
+</body>
+</html>
