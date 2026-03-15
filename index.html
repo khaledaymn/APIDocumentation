@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Dashboard | API Reference</title>
+    <title>API Reference</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; padding: 0; }
@@ -37,19 +37,15 @@
             font-weight: 600;
             border: 1px solid #e0f2fe;
         }
-        .redoc-container .right-panel {
-            display: none !important;
-        }
-        .redoc-container .center-panel {
-            width: 100% !important;
-            max-width: unset !important;
-        }
     </style>
 </head>
 <body>
 
     <header class="branding-header">
-        <h1>Portfolio <span style="color: #0ea5e9; font-weight: 400;">Dashboard API</span></h1>
+        <h1 id="dynamic-header">
+            <span id="part1"></span> 
+            <span id="part2" style="color: #0ea5e9; font-weight: 400;"></span>
+        </h1>
         <div class="status-badge">v1.0.0 - STABLE</div>
     </header>
 
@@ -58,7 +54,17 @@
     <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
 
     <script>
-        Redoc.init('swagger.json', {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        const specFile = urlParams.get('spec') || 'swagger.json';
+        const name1 = urlParams.get('n1') || 'API';
+        const name2 = urlParams.get('n2') || 'REFERENCE';
+
+        document.getElementById('part1').innerText = name1;
+        document.getElementById('part2').innerText = name2;
+        document.title = name1 + " " + name2;
+
+        Redoc.init(specFile, {
             scrollYOffset: 65,
             hideDownloadButton: true,
             theme: {
@@ -86,8 +92,7 @@
             expandSingleSchemaField: true,
             requiredPropsFirst: true,
             pathInMiddlePanel: true,
-            expandSingleSchemaField: true,
-            requiredPropsFirst: true
+            cors: true
         }, document.getElementById('redoc-container'));
     </script>
 </body>
