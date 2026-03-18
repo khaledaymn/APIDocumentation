@@ -1,0 +1,1900 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "🏗️ ERD Pro: AI-Powered Schema Engine",
+    "description": "### 🌐 Overview\n**ERD Pro** is a high-performance database design platform that bridges the gap between raw code and visual architecture. It empowers developers to visualize, design, and manage complex database schemas through an AI-driven interface.\n\n#### 🚀 Core System Architecture\n* **AI Schema Parser**: Powered by **Gemini 3 Flash**, the engine deconstructs C# entities and SQL DDL into structured JSON schemas with intelligent, non-overlapping visual coordinates.\n* **Bidirectional Transformation**: Seamlessly transform visual diagrams back into production-ready **SQL Scripts** or **EF Core Entities**.\n* **Schema Persistence**: A robust storage layer for complex ERD JSON objects, ensuring design integrity and stateless session management.\n* **RESTful Integrity**: Implements standard HTTP patterns with strict ownership validation and atomic database transactions.\n\n#### 🔑 Security & Identity\nThe API is secured via **JWT Bearer Authentication**. All project-related operations are sandboxed to the authenticated user's identity, ensuring that design schemas remain private and secure.",
+    "contact": {
+      "name": "Khaled Ayman",
+      "url": "https://github.com/khaledaymn",
+      "email": "khaled654ayman0@gmail.com"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Accounts/register": {
+      "post": {
+        "tags": [
+          "1. Identity & Security"
+        ],
+        "summary": "Create a new user account",
+        "description": "### 🚀 Account Onboarding\n\nThis endpoint allows new users to join the ERD Pro platform. Upon successful registration, the system automatically logs the user in and generates a secure JWT session.\n\n#### **🔒 Security Details:**\n| Claim | Description | Value Example |\n| :--- | :--- | :--- |\n| `nameid` | Unique System User ID | `GUID` |\n| `email` | Registered Email | `user@example.com` |\n| `role` | Default Access Role | `User` |\n\n> **Note:** The password must meet security complexity: at least 8 characters, numbers, and special symbols.",
+        "operationId": "PostRegister",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.AccountDTOs.RegisterDTO"
+              },
+              "example": {
+                "fullName": "Ahmed Mohamed",
+                "email": "ahmed.dev@example.com",
+                "password": "P@ssw0rd123!"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.AccountDTOs.RegisterDTO"
+              },
+              "example": {
+                "fullName": "Ahmed Mohamed",
+                "email": "ahmed.dev@example.com",
+                "password": "P@ssw0rd123!"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.AccountDTOs.RegisterDTO"
+              },
+              "example": {
+                "fullName": "Ahmed Mohamed",
+                "email": "ahmed.dev@example.com",
+                "password": "P@ssw0rd123!"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "User registered successfully.",
+                  "fullName": "Khaled Ayman",
+                  "email": "khaled.ayman@example.com",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyIsImVtYWlsIjoia2hhbGVk..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "User registered successfully.",
+                  "fullName": "Khaled Ayman",
+                  "email": "khaled.ayman@example.com",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyIsImVtYWlsIjoia2hhbGVk..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "User registered successfully.",
+                  "fullName": "Khaled Ayman",
+                  "email": "khaled.ayman@example.com",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyIsImVtYWlsIjoia2hhbGVk..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Email is already registered."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Email is already registered."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Email is already registered."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Accounts/login": {
+      "post": {
+        "tags": [
+          "1. Identity & Security"
+        ],
+        "summary": "Authenticate user and get token",
+        "description": "### 🔑 Secure Authentication\n\nExchange user credentials for a secure JWT access token. This token must be included in the `Authorization` header for all protected API calls.\n\n#### **Session Lifecycle:**\n* **Validity**: 7 Days (Default).\n* **Type**: Bearer Token.\n\n> **Security Note:** Never share your JWT token. If compromised, contact system admin immediately.",
+        "operationId": "PostLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.AccountDTOs.LoginDTO"
+              },
+              "example": {
+                "email": "ahmed.dev@example.com",
+                "password": "P@ssw0rd123!"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.AccountDTOs.LoginDTO"
+              },
+              "example": {
+                "email": "ahmed.dev@example.com",
+                "password": "P@ssw0rd123!"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.AccountDTOs.LoginDTO"
+              },
+              "example": {
+                "email": "ahmed.dev@example.com",
+                "password": "P@ssw0rd123!"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Login successful.",
+                  "fullName": "Ahmed Mohamed",
+                  "email": "ahmed.dev@example.com",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Login successful.",
+                  "fullName": "Ahmed Mohamed",
+                  "email": "ahmed.dev@example.com",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Login successful.",
+                  "fullName": "Ahmed Mohamed",
+                  "email": "ahmed.dev@example.com",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Invalid email or password."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Invalid email or password."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.AccountDTOs.UserDataDTO"
+                },
+                "example": {
+                  "message": "Invalid email or password."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Projects": {
+      "get": {
+        "tags": [
+          "2. Projects Management"
+        ],
+        "summary": "Get all projects for the current user",
+        "description": "### 📂 Project Library\n\nRetrieves a collection of all ERD projects owned by the authenticated user. This returns a summarized version of the projects for listing purposes.\n\n#### **Security:**\n* **Required Role**: Any Authenticated User.\n* **Authentication**: Bearer Token required.\n\n> **Note:** To get the full ERD content (JSON), use the `GetById` endpoint.",
+        "operationId": "GetAllProjects",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DTOs.ProjectDTOs.ProjectSummaryDTO"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Social Media App",
+                    "createdAt": "2026-03-10T17:44:30.9593578Z"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Hospital Management",
+                    "createdAt": "2026-03-13T17:44:30.9593602Z"
+                  }
+                ]
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DTOs.ProjectDTOs.ProjectSummaryDTO"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Social Media App",
+                    "createdAt": "2026-03-10T17:44:30.9593578Z"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Hospital Management",
+                    "createdAt": "2026-03-13T17:44:30.9593602Z"
+                  }
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DTOs.ProjectDTOs.ProjectSummaryDTO"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Social Media App",
+                    "createdAt": "2026-03-10T17:44:30.9593578Z"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Hospital Management",
+                    "createdAt": "2026-03-13T17:44:30.9593602Z"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "2. Projects Management"
+        ],
+        "summary": "Initialize a new ERD project",
+        "description": "### 🏗️ Start a New Design\n\nCreates a new project record assigned to the current user. You can start with a name only, or provide a full JSON schema.\n\n#### **Technical Details:**\n* **Default Content**: If `contentJson` is null, the system initializes: `{\"tables\": []}`.\n* **Ownership**: The project is automatically linked to your JWT Identity.\n\n> **Success Response**: You will receive a `201 Created` status with the full project object including its generated `Id`.",
+        "operationId": "PostCreateProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.ProjectDTOs.CreateProjectRequest"
+              },
+              "example": {
+                "name": "Social Media Database",
+                "contentJson": "{\"tables\": [{\"id\":\"init-1\",\"name\":\"Users\",\"columns\":[]}]}"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.ProjectDTOs.CreateProjectRequest"
+              },
+              "example": {
+                "name": "Social Media Database",
+                "contentJson": "{\"tables\": [{\"id\":\"init-1\",\"name\":\"Users\",\"columns\":[]}]}"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.ProjectDTOs.CreateProjectRequest"
+              },
+              "example": {
+                "name": "Social Media Database",
+                "contentJson": "{\"tables\": [{\"id\":\"init-1\",\"name\":\"Users\",\"columns\":[]}]}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models.Project"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Portfolio DB",
+                  "contentJson": "{\"tables\":[{\"id\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"name\":\"Users\",\"columns\":[{\"id\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"name\":\"Id\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"910e1036-de6e-464e-b5d6-bd9323eb203b\",\"name\":\"Email\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"21fb9058-f5d3-4f23-a8e3-f3218273f485\",\"name\":\"Password\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a4f774e6-0e23-47a0-a338-cc049568ac6f\",\"name\":\"FullName\",\"type\":\"NVARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}}],\"position\":{\"x\":150,\"y\":150},\"color\":\"indigo\"},{\"id\":\"4b8a6416-030c-49ce-9455-949200614eb0\",\"name\":\"Projects\",\"columns\":[{\"id\":\"7f3001e8-7c0b-49c4-9987-86572cf7a7a0\",\"name\":\"Id\",\"type\":\"INT\",\"length\":\"\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":true,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"407bade0-075f-4867-bdd5-d909f63b846d\",\"name\":\"Name\",\"type\":\"NVARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"5eb9f1e7-cacf-49db-b687-2b6fdaef2656\",\"name\":\"ContentJson\",\"type\":\"JSON\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a515991a-e0e3-49d1-8378-23ec448696ec\",\"name\":\"CreatedAt\",\"type\":\"BOOLEAN\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"8d4d3dfa-93ee-4bd7-8680-5f26d74e92e5\",\"name\":\"UserId\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"},\"foreignKey\":{\"targetTableId\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"targetColumnId\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"relationType\":\"m-1\",\"sourceParticipation\":\"TOTAL\",\"targetParticipation\":\"PARTIAL\",\"onDelete\":\"CASCADE\",\"onUpdate\":\"NO ACTION\"}}],\"position\":{\"x\":765.7943799782689,\"y\":152.9989986037903},\"color\":\"indigo\"}],\"lastUpdated\":\"2026-02-25T15:49:26.902Z\",\"tableRelationships\":[]}",
+                  "createdAt": "2026-02-25T17:49:26.902+02:00"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models.Project"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Portfolio DB",
+                  "contentJson": "{\"tables\":[{\"id\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"name\":\"Users\",\"columns\":[{\"id\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"name\":\"Id\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"910e1036-de6e-464e-b5d6-bd9323eb203b\",\"name\":\"Email\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"21fb9058-f5d3-4f23-a8e3-f3218273f485\",\"name\":\"Password\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a4f774e6-0e23-47a0-a338-cc049568ac6f\",\"name\":\"FullName\",\"type\":\"NVARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}}],\"position\":{\"x\":150,\"y\":150},\"color\":\"indigo\"},{\"id\":\"4b8a6416-030c-49ce-9455-949200614eb0\",\"name\":\"Projects\",\"columns\":[{\"id\":\"7f3001e8-7c0b-49c4-9987-86572cf7a7a0\",\"name\":\"Id\",\"type\":\"INT\",\"length\":\"\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":true,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"407bade0-075f-4867-bdd5-d909f63b846d\",\"name\":\"Name\",\"type\":\"NVARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"5eb9f1e7-cacf-49db-b687-2b6fdaef2656\",\"name\":\"ContentJson\",\"type\":\"JSON\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a515991a-e0e3-49d1-8378-23ec448696ec\",\"name\":\"CreatedAt\",\"type\":\"BOOLEAN\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"8d4d3dfa-93ee-4bd7-8680-5f26d74e92e5\",\"name\":\"UserId\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"},\"foreignKey\":{\"targetTableId\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"targetColumnId\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"relationType\":\"m-1\",\"sourceParticipation\":\"TOTAL\",\"targetParticipation\":\"PARTIAL\",\"onDelete\":\"CASCADE\",\"onUpdate\":\"NO ACTION\"}}],\"position\":{\"x\":765.7943799782689,\"y\":152.9989986037903},\"color\":\"indigo\"}],\"lastUpdated\":\"2026-02-25T15:49:26.902Z\",\"tableRelationships\":[]}",
+                  "createdAt": "2026-02-25T17:49:26.902+02:00"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models.Project"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Portfolio DB",
+                  "contentJson": "{\"tables\":[{\"id\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"name\":\"Users\",\"columns\":[{\"id\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"name\":\"Id\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"910e1036-de6e-464e-b5d6-bd9323eb203b\",\"name\":\"Email\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"21fb9058-f5d3-4f23-a8e3-f3218273f485\",\"name\":\"Password\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a4f774e6-0e23-47a0-a338-cc049568ac6f\",\"name\":\"FullName\",\"type\":\"NVARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}}],\"position\":{\"x\":150,\"y\":150},\"color\":\"indigo\"},{\"id\":\"4b8a6416-030c-49ce-9455-949200614eb0\",\"name\":\"Projects\",\"columns\":[{\"id\":\"7f3001e8-7c0b-49c4-9987-86572cf7a7a0\",\"name\":\"Id\",\"type\":\"INT\",\"length\":\"\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":true,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"407bade0-075f-4867-bdd5-d909f63b846d\",\"name\":\"Name\",\"type\":\"NVARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"5eb9f1e7-cacf-49db-b687-2b6fdaef2656\",\"name\":\"ContentJson\",\"type\":\"JSON\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a515991a-e0e3-49d1-8378-23ec448696ec\",\"name\":\"CreatedAt\",\"type\":\"BOOLEAN\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"8d4d3dfa-93ee-4bd7-8680-5f26d74e92e5\",\"name\":\"UserId\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"},\"foreignKey\":{\"targetTableId\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"targetColumnId\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"relationType\":\"m-1\",\"sourceParticipation\":\"TOTAL\",\"targetParticipation\":\"PARTIAL\",\"onDelete\":\"CASCADE\",\"onUpdate\":\"NO ACTION\"}}],\"position\":{\"x\":765.7943799782689,\"y\":152.9989986037903},\"color\":\"indigo\"}],\"lastUpdated\":\"2026-02-25T15:49:26.902Z\",\"tableRelationships\":[]}",
+                  "createdAt": "2026-02-25T17:49:26.902+02:00"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "2. Projects Management"
+        ],
+        "summary": "Update project schema or name",
+        "description": "### 🔄 Refine Your Design\n\nModifies an existing project. You can update only the name, only the JSON schema, or both in a single request.\n\n#### **Operational Logic:**\n* **Delta Updates**: If a field is omitted or null, its existing value in the database remains unchanged.\n* **Validation**: The project `Id` must exist and belong to the authenticated user.\n\n> **Response**: Returns `204 No Content` on success, indicating the resource was updated without sending back the data.",
+        "operationId": "PutUpdateProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.ProjectDTOs.UpdateProjectRequest"
+              },
+              "example": {
+                "id": 1,
+                "name": "Refactored Database Schema",
+                "contentJson": "{\"tables\": [{\"id\":\"table-1\",\"name\":\"Products\",\"columns\":[]}]}"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.ProjectDTOs.UpdateProjectRequest"
+              },
+              "example": {
+                "id": 1,
+                "name": "Refactored Database Schema",
+                "contentJson": "{\"tables\": [{\"id\":\"table-1\",\"name\":\"Products\",\"columns\":[]}]}"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.ProjectDTOs.UpdateProjectRequest"
+              },
+              "example": {
+                "id": 1,
+                "name": "Refactored Database Schema",
+                "contentJson": "{\"tables\": [{\"id\":\"table-1\",\"name\":\"Products\",\"columns\":[]}]}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Projects/{id}": {
+      "get": {
+        "tags": [
+          "2. Projects Management"
+        ],
+        "summary": "Retrieve full project details",
+        "description": "### 🔍 Deep Dive into Schema\n\nFetches all information for a specific project, including the raw `ContentJson` which holds the entire ERD structure.\n\n#### **Data Breakdown:**\n* **Metadata**: Name and Creation Date.\n* **ContentJson**: A stringified object containing tables, coordinates for the UI, and database constraints.\n\n> **Note:** This endpoint checks for ownership. If the project doesn't belong to you, it will return a `404 Not Found` for security purposes.",
+        "operationId": "GetProjectById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models.Project"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Portfolio DB",
+                  "contentJson": "{\"tables\":[{\"id\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"name\":\"Users\",\"columns\":[{\"id\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"name\":\"Id\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"910e1036-de6e-464e-b5d6-bd9323eb203b\",\"name\":\"Email\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"21fb9058-f5d3-4f23-a8e3-f3218273f485\",\"name\":\"Password\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a4f774e6-0e23-47a0-a338-cc049568ac6f\",\"name\":\"FullName\",\"type\":\"NVARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}}],\"position\":{\"x\":150,\"y\":150},\"color\":\"indigo\"},{\"id\":\"4b8a6416-030c-49ce-9455-949200614eb0\",\"name\":\"Projects\",\"columns\":[{\"id\":\"7f3001e8-7c0b-49c4-9987-86572cf7a7a0\",\"name\":\"Id\",\"type\":\"INT\",\"length\":\"\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":true,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"407bade0-075f-4867-bdd5-d909f63b846d\",\"name\":\"Name\",\"type\":\"NVARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"5eb9f1e7-cacf-49db-b687-2b6fdaef2656\",\"name\":\"ContentJson\",\"type\":\"JSON\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a515991a-e0e3-49d1-8378-23ec448696ec\",\"name\":\"CreatedAt\",\"type\":\"BOOLEAN\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"8d4d3dfa-93ee-4bd7-8680-5f26d74e92e5\",\"name\":\"UserId\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"},\"foreignKey\":{\"targetTableId\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"targetColumnId\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"relationType\":\"m-1\",\"sourceParticipation\":\"TOTAL\",\"targetParticipation\":\"PARTIAL\",\"onDelete\":\"CASCADE\",\"onUpdate\":\"NO ACTION\"}}],\"position\":{\"x\":765.7943799782689,\"y\":152.9989986037903},\"color\":\"indigo\"}],\"lastUpdated\":\"2026-02-25T15:49:26.902Z\",\"tableRelationships\":[]}",
+                  "createdAt": "2026-02-25T17:49:26.902+02:00"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models.Project"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Portfolio DB",
+                  "contentJson": "{\"tables\":[{\"id\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"name\":\"Users\",\"columns\":[{\"id\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"name\":\"Id\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"910e1036-de6e-464e-b5d6-bd9323eb203b\",\"name\":\"Email\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"21fb9058-f5d3-4f23-a8e3-f3218273f485\",\"name\":\"Password\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a4f774e6-0e23-47a0-a338-cc049568ac6f\",\"name\":\"FullName\",\"type\":\"NVARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}}],\"position\":{\"x\":150,\"y\":150},\"color\":\"indigo\"},{\"id\":\"4b8a6416-030c-49ce-9455-949200614eb0\",\"name\":\"Projects\",\"columns\":[{\"id\":\"7f3001e8-7c0b-49c4-9987-86572cf7a7a0\",\"name\":\"Id\",\"type\":\"INT\",\"length\":\"\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":true,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"407bade0-075f-4867-bdd5-d909f63b846d\",\"name\":\"Name\",\"type\":\"NVARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"5eb9f1e7-cacf-49db-b687-2b6fdaef2656\",\"name\":\"ContentJson\",\"type\":\"JSON\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a515991a-e0e3-49d1-8378-23ec448696ec\",\"name\":\"CreatedAt\",\"type\":\"BOOLEAN\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"8d4d3dfa-93ee-4bd7-8680-5f26d74e92e5\",\"name\":\"UserId\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"},\"foreignKey\":{\"targetTableId\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"targetColumnId\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"relationType\":\"m-1\",\"sourceParticipation\":\"TOTAL\",\"targetParticipation\":\"PARTIAL\",\"onDelete\":\"CASCADE\",\"onUpdate\":\"NO ACTION\"}}],\"position\":{\"x\":765.7943799782689,\"y\":152.9989986037903},\"color\":\"indigo\"}],\"lastUpdated\":\"2026-02-25T15:49:26.902Z\",\"tableRelationships\":[]}",
+                  "createdAt": "2026-02-25T17:49:26.902+02:00"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models.Project"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Portfolio DB",
+                  "contentJson": "{\"tables\":[{\"id\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"name\":\"Users\",\"columns\":[{\"id\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"name\":\"Id\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"910e1036-de6e-464e-b5d6-bd9323eb203b\",\"name\":\"Email\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"21fb9058-f5d3-4f23-a8e3-f3218273f485\",\"name\":\"Password\",\"type\":\"VARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a4f774e6-0e23-47a0-a338-cc049568ac6f\",\"name\":\"FullName\",\"type\":\"NVARCHAR\",\"length\":\"MAX\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}}],\"position\":{\"x\":150,\"y\":150},\"color\":\"indigo\"},{\"id\":\"4b8a6416-030c-49ce-9455-949200614eb0\",\"name\":\"Projects\",\"columns\":[{\"id\":\"7f3001e8-7c0b-49c4-9987-86572cf7a7a0\",\"name\":\"Id\",\"type\":\"INT\",\"length\":\"\",\"constraints\":{\"isPK\":true,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":true,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"407bade0-075f-4867-bdd5-d909f63b846d\",\"name\":\"Name\",\"type\":\"NVARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":true,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"5eb9f1e7-cacf-49db-b687-2b6fdaef2656\",\"name\":\"ContentJson\",\"type\":\"JSON\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"a515991a-e0e3-49d1-8378-23ec448696ec\",\"name\":\"CreatedAt\",\"type\":\"BOOLEAN\",\"length\":\"\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"}},{\"id\":\"8d4d3dfa-93ee-4bd7-8680-5f26d74e92e5\",\"name\":\"UserId\",\"type\":\"VARCHAR\",\"length\":\"255\",\"constraints\":{\"isPK\":false,\"isNullable\":false,\"isUnique\":false,\"isAutoIncrement\":false,\"defaultValue\":\"\",\"checkConstraint\":\"\"},\"foreignKey\":{\"targetTableId\":\"dd219ae8-cad9-4402-abda-08273559005d\",\"targetColumnId\":\"2b2147ab-ed7d-484f-8f64-da549b12dcaa\",\"relationType\":\"m-1\",\"sourceParticipation\":\"TOTAL\",\"targetParticipation\":\"PARTIAL\",\"onDelete\":\"CASCADE\",\"onUpdate\":\"NO ACTION\"}}],\"position\":{\"x\":765.7943799782689,\"y\":152.9989986037903},\"color\":\"indigo\"}],\"lastUpdated\":\"2026-02-25T15:49:26.902Z\",\"tableRelationships\":[]}",
+                  "createdAt": "2026-02-25T17:49:26.902+02:00"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                },
+                "example": {
+                  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                  "title": "An error occurred while processing your request.",
+                  "status": 500,
+                  "detail": "System.NullReferenceException: Object reference not set to an instance of an object...",
+                  "traceId": "00-84a2f8c0-..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "2. Projects Management"
+        ],
+        "summary": "Delete a project permanently",
+        "description": "### ⚠️ Danger Zone\n\nDeletes the specified project and all its associated data from the database. **This action is irreversible.**\n\n#### **Validation & Security:**\n* **Ownership Check**: You can only delete projects created by your account.\n* **Referential Integrity**: Deleting a project will remove its ERD JSON schema and all metadata.\n\n> **Warning:** Ensure you have a backup of the `ContentJson` if you might need the design later.",
+        "operationId": "DeleteProject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                },
+                "example": {
+                  "message": "Delete failed. Project not found or unauthorized."
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                },
+                "example": {
+                  "message": "Delete failed. Project not found or unauthorized."
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                },
+                "example": {
+                  "message": "Delete failed. Project not found or unauthorized."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerExamples.CommonErrorExamples.InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Schema/parse-to-json": {
+      "post": {
+        "tags": [
+          "3. AI Schema Engine"
+        ],
+        "summary": "AI-Powered Code to ERD Parser",
+        "description": "### 🧠 Intelligent Schema Extraction\n\nLeverages **Gemini 3 Flash** to deconstruct raw programming code or SQL scripts into a structured visual ERD format.\n\n#### **AI Capabilities:**\n* **Visual Grid Layout**: Calculates non-overlapping (X, Y) coordinates.\n* **Relationship Detection**: Inferred PK/FK and M:N virtual relationships.\n\n> **Note:** The response is optimized for direct consumption by the ERD Canvas engine.",
+        "operationId": "PostParseToJson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.SchemaDTOs.ParseRequest"
+              },
+              "example": {
+                "rawCode": "public class User { \n    public int Id { get; set; }\n    public string FullName { get; set; }\n    public List<Order> Orders { get; set; }\n}\n\npublic class Order {\n    public int Id { get; set; }\n    public int UserId { get; set; }\n}"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.SchemaDTOs.ParseRequest"
+              },
+              "example": {
+                "rawCode": "public class User { \n    public int Id { get; set; }\n    public string FullName { get; set; }\n    public List<Order> Orders { get; set; }\n}\n\npublic class Order {\n    public int Id { get; set; }\n    public int UserId { get; set; }\n}"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.SchemaDTOs.ParseRequest"
+              },
+              "example": {
+                "rawCode": "public class User { \n    public int Id { get; set; }\n    public string FullName { get; set; }\n    public List<Order> Orders { get; set; }\n}\n\npublic class Order {\n    public int Id { get; set; }\n    public int UserId { get; set; }\n}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.SchemaDTOs.SchemaResponse"
+                },
+                "example": {
+                  "tables": [
+                    {
+                      "id": "tbl_users_101",
+                      "name": "Users",
+                      "isJunctionTable": false,
+                      "columns": [
+                        {
+                          "id": "col_1",
+                          "name": "Id",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": true,
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "id": "col_2",
+                          "name": "Email",
+                          "type": "NVARCHAR",
+                          "constraints": {
+                            "isPK": false,
+                            "isNullable": false
+                          }
+                        }
+                      ],
+                      "position": {
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "id": "tbl_orders_202",
+                      "name": "Orders",
+                      "isJunctionTable": false,
+                      "columns": [
+                        {
+                          "id": "col_3",
+                          "name": "Id",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": true,
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "id": "col_4",
+                          "name": "UserId",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": false,
+                            "isNullable": false
+                          },
+                          "foreignKey": {
+                            "targetTableId": "tbl_users_101",
+                            "relationType": "1-n"
+                          }
+                        }
+                      ],
+                      "position": {
+                        "x": 450,
+                        "y": 0
+                      }
+                    }
+                  ],
+                  "tableRelationships": [
+                    {
+                      "id": "rel_1",
+                      "sourceTableId": "tbl_users_101",
+                      "targetTableId": "tbl_orders_202",
+                      "type": "1-m"
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.SchemaDTOs.SchemaResponse"
+                },
+                "example": {
+                  "tables": [
+                    {
+                      "id": "tbl_users_101",
+                      "name": "Users",
+                      "isJunctionTable": false,
+                      "columns": [
+                        {
+                          "id": "col_1",
+                          "name": "Id",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": true,
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "id": "col_2",
+                          "name": "Email",
+                          "type": "NVARCHAR",
+                          "constraints": {
+                            "isPK": false,
+                            "isNullable": false
+                          }
+                        }
+                      ],
+                      "position": {
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "id": "tbl_orders_202",
+                      "name": "Orders",
+                      "isJunctionTable": false,
+                      "columns": [
+                        {
+                          "id": "col_3",
+                          "name": "Id",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": true,
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "id": "col_4",
+                          "name": "UserId",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": false,
+                            "isNullable": false
+                          },
+                          "foreignKey": {
+                            "targetTableId": "tbl_users_101",
+                            "relationType": "1-n"
+                          }
+                        }
+                      ],
+                      "position": {
+                        "x": 450,
+                        "y": 0
+                      }
+                    }
+                  ],
+                  "tableRelationships": [
+                    {
+                      "id": "rel_1",
+                      "sourceTableId": "tbl_users_101",
+                      "targetTableId": "tbl_orders_202",
+                      "type": "1-m"
+                    }
+                  ]
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOs.SchemaDTOs.SchemaResponse"
+                },
+                "example": {
+                  "tables": [
+                    {
+                      "id": "tbl_users_101",
+                      "name": "Users",
+                      "isJunctionTable": false,
+                      "columns": [
+                        {
+                          "id": "col_1",
+                          "name": "Id",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": true,
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "id": "col_2",
+                          "name": "Email",
+                          "type": "NVARCHAR",
+                          "constraints": {
+                            "isPK": false,
+                            "isNullable": false
+                          }
+                        }
+                      ],
+                      "position": {
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "id": "tbl_orders_202",
+                      "name": "Orders",
+                      "isJunctionTable": false,
+                      "columns": [
+                        {
+                          "id": "col_3",
+                          "name": "Id",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": true,
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "id": "col_4",
+                          "name": "UserId",
+                          "type": "INT",
+                          "constraints": {
+                            "isPK": false,
+                            "isNullable": false
+                          },
+                          "foreignKey": {
+                            "targetTableId": "tbl_users_101",
+                            "relationType": "1-n"
+                          }
+                        }
+                      ],
+                      "position": {
+                        "x": 450,
+                        "y": 0
+                      }
+                    }
+                  ],
+                  "tableRelationships": [
+                    {
+                      "id": "rel_1",
+                      "sourceTableId": "tbl_users_101",
+                      "targetTableId": "tbl_orders_202",
+                      "type": "1-m"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Schema/generate-code": {
+      "post": {
+        "tags": [
+          "3. AI Schema Engine"
+        ],
+        "summary": "Transform ERD Schema into Scripts",
+        "description": "### 📜 Code Generation Engine\n\nThis endpoint acts as the reverse-engineer of the AI engine. It takes a visual ERD JSON structure and translates it into production-ready source code.\n\n#### **Transformation Logic:**\n* **SQL Dialects**: Generates DDL including `CREATE TABLE`, `PRIMARY KEY`, and `FOREIGN KEY` constraints.\n* **ORM Mapping**: Can generate C# Entity Framework classes with appropriate Data Annotations.\n* **Relationship Handling**: Correctly interprets M:N virtual relationships into physical junction tables in the output script.\n\n| Supported Languages | Output Type | Accuracy |\n| :--- | :--- | :--- |\n| SQL, PostgreSQL, C# | Plain Text (Code) | High (Architect Level) |\n\n> **Note:** The generated code is optimized for the requested `targetLanguage` query parameter.",
+        "operationId": "PostGenerateCode",
+        "parameters": [
+          {
+            "name": "targetLanguage",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "SQL"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.SchemaDTOs.SchemaResponse"
+              },
+              "example": {
+                "tables": [
+                  {
+                    "id": "tbl_users_101",
+                    "name": "Users",
+                    "isJunctionTable": false,
+                    "columns": [
+                      {
+                        "id": "col_1",
+                        "name": "Id",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": true,
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "id": "col_2",
+                        "name": "Email",
+                        "type": "NVARCHAR",
+                        "constraints": {
+                          "isPK": false,
+                          "isNullable": false
+                        }
+                      }
+                    ],
+                    "position": {
+                      "x": 0,
+                      "y": 0
+                    }
+                  },
+                  {
+                    "id": "tbl_orders_202",
+                    "name": "Orders",
+                    "isJunctionTable": false,
+                    "columns": [
+                      {
+                        "id": "col_3",
+                        "name": "Id",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": true,
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "id": "col_4",
+                        "name": "UserId",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": false,
+                          "isNullable": false
+                        },
+                        "foreignKey": {
+                          "targetTableId": "tbl_users_101",
+                          "relationType": "1-n"
+                        }
+                      }
+                    ],
+                    "position": {
+                      "x": 450,
+                      "y": 0
+                    }
+                  }
+                ],
+                "tableRelationships": [
+                  {
+                    "id": "rel_1",
+                    "sourceTableId": "tbl_users_101",
+                    "targetTableId": "tbl_orders_202",
+                    "type": "1-m"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.SchemaDTOs.SchemaResponse"
+              },
+              "example": {
+                "tables": [
+                  {
+                    "id": "tbl_users_101",
+                    "name": "Users",
+                    "isJunctionTable": false,
+                    "columns": [
+                      {
+                        "id": "col_1",
+                        "name": "Id",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": true,
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "id": "col_2",
+                        "name": "Email",
+                        "type": "NVARCHAR",
+                        "constraints": {
+                          "isPK": false,
+                          "isNullable": false
+                        }
+                      }
+                    ],
+                    "position": {
+                      "x": 0,
+                      "y": 0
+                    }
+                  },
+                  {
+                    "id": "tbl_orders_202",
+                    "name": "Orders",
+                    "isJunctionTable": false,
+                    "columns": [
+                      {
+                        "id": "col_3",
+                        "name": "Id",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": true,
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "id": "col_4",
+                        "name": "UserId",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": false,
+                          "isNullable": false
+                        },
+                        "foreignKey": {
+                          "targetTableId": "tbl_users_101",
+                          "relationType": "1-n"
+                        }
+                      }
+                    ],
+                    "position": {
+                      "x": 450,
+                      "y": 0
+                    }
+                  }
+                ],
+                "tableRelationships": [
+                  {
+                    "id": "rel_1",
+                    "sourceTableId": "tbl_users_101",
+                    "targetTableId": "tbl_orders_202",
+                    "type": "1-m"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DTOs.SchemaDTOs.SchemaResponse"
+              },
+              "example": {
+                "tables": [
+                  {
+                    "id": "tbl_users_101",
+                    "name": "Users",
+                    "isJunctionTable": false,
+                    "columns": [
+                      {
+                        "id": "col_1",
+                        "name": "Id",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": true,
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "id": "col_2",
+                        "name": "Email",
+                        "type": "NVARCHAR",
+                        "constraints": {
+                          "isPK": false,
+                          "isNullable": false
+                        }
+                      }
+                    ],
+                    "position": {
+                      "x": 0,
+                      "y": 0
+                    }
+                  },
+                  {
+                    "id": "tbl_orders_202",
+                    "name": "Orders",
+                    "isJunctionTable": false,
+                    "columns": [
+                      {
+                        "id": "col_3",
+                        "name": "Id",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": true,
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "id": "col_4",
+                        "name": "UserId",
+                        "type": "INT",
+                        "constraints": {
+                          "isPK": false,
+                          "isNullable": false
+                        },
+                        "foreignKey": {
+                          "targetTableId": "tbl_users_101",
+                          "relationType": "1-n"
+                        }
+                      }
+                    ],
+                    "position": {
+                      "x": 450,
+                      "y": 0
+                    }
+                  }
+                ],
+                "tableRelationships": [
+                  {
+                    "id": "rel_1",
+                    "sourceTableId": "tbl_users_101",
+                    "targetTableId": "tbl_orders_202",
+                    "type": "1-m"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {
+                  "language": "SQL",
+                  "code": "-- Generated by ERD Pro AI\nCREATE TABLE Users (\n    Id INT PRIMARY KEY,\n    FullName NVARCHAR(255) NOT NULL,\n    Email NVARCHAR(255) UNIQUE\n);\n\nCREATE TABLE Projects (\n    Id INT PRIMARY KEY,\n    Name NVARCHAR(100),\n    UserId INT,\n    CONSTRAINT FK_UserProject FOREIGN KEY (UserId) REFERENCES Users(Id)\n);",
+                  "timestamp": "2026-03-15T17:44:30.9743366Z"
+                }
+              },
+              "application/json": {
+                "schema": { },
+                "example": {
+                  "language": "SQL",
+                  "code": "-- Generated by ERD Pro AI\nCREATE TABLE Users (\n    Id INT PRIMARY KEY,\n    FullName NVARCHAR(255) NOT NULL,\n    Email NVARCHAR(255) UNIQUE\n);\n\nCREATE TABLE Projects (\n    Id INT PRIMARY KEY,\n    Name NVARCHAR(100),\n    UserId INT,\n    CONSTRAINT FK_UserProject FOREIGN KEY (UserId) REFERENCES Users(Id)\n);",
+                  "timestamp": "2026-03-15T17:44:30.9743366Z"
+                }
+              },
+              "text/json": {
+                "schema": { },
+                "example": {
+                  "language": "SQL",
+                  "code": "-- Generated by ERD Pro AI\nCREATE TABLE Users (\n    Id INT PRIMARY KEY,\n    FullName NVARCHAR(255) NOT NULL,\n    Email NVARCHAR(255) UNIQUE\n);\n\nCREATE TABLE Projects (\n    Id INT PRIMARY KEY,\n    Name NVARCHAR(100),\n    UserId INT,\n    CONSTRAINT FK_UserProject FOREIGN KEY (UserId) REFERENCES Users(Id)\n);",
+                  "timestamp": "2026-03-15T17:44:30.9743366Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DTOs.AccountDTOs.LoginDTO": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The registered email address.",
+            "format": "email",
+            "example": "ahmed.dev@example.com"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The secure password associated with the account.",
+            "example": "P@ssw0rd123!"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.AccountDTOs.RegisterDTO": {
+        "required": [
+          "email",
+          "fullName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The full legal name of the user.",
+            "example": "Ahmed Mohamed"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "description": "A unique email address that will be used for login and notifications.",
+            "format": "email",
+            "example": "ahmed.dev@example.com"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string",
+            "description": "A secure password. Must meet Identity complexity requirements.",
+            "example": "P@ssw0rd123!"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.AccountDTOs.UserDataDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "A descriptive message indicating the result of the operation.",
+            "nullable": true,
+            "example": "User registered successfully."
+          },
+          "fullName": {
+            "type": "string",
+            "description": "The confirmed full name of the registered user.",
+            "nullable": true,
+            "example": "Khaled Ayman"
+          },
+          "email": {
+            "type": "string",
+            "description": "The registered email address associated with the account.",
+            "nullable": true,
+            "example": "khaled.dev@example.com"
+          },
+          "token": {
+            "type": "string",
+            "description": "The JWT Access Token granted to the user for authorized requests.",
+            "nullable": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.ProjectDTOs.CreateProjectRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 3,
+            "type": "string",
+            "description": "The name of your new ERD project.",
+            "example": "Social Media Database"
+          },
+          "contentJson": {
+            "type": "string",
+            "description": "The initial ERD structure in JSON format. \r\nIf left empty, an empty canvas will be initialized.",
+            "nullable": true,
+            "example": "{\"tables\": []}"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.ProjectDTOs.ProjectSummaryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique database identifier for the project.",
+            "format": "int32",
+            "example": 101
+          },
+          "name": {
+            "type": "string",
+            "description": "The user-defined name of the ERD project.",
+            "nullable": true,
+            "example": "E-Commerce System DB"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time when the project was first created (UTC).",
+            "format": "date-time",
+            "example": "2024-05-15T14:30:00Z"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.ProjectDTOs.UpdateProjectRequest": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The ID of the project you want to modify.",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "New name for the project (Optional).",
+            "nullable": true,
+            "example": "Updated Social Media DB"
+          },
+          "contentJson": {
+            "type": "string",
+            "description": "Updated ERD schema JSON string (Optional).",
+            "nullable": true,
+            "example": "{\"tables\": [{\"name\": \"Posts\", \"columns\": []}]}"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.SchemaDTOs.ColumnConstraints": {
+        "type": "object",
+        "properties": {
+          "isPK": {
+            "type": "boolean"
+          },
+          "isNullable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.SchemaDTOs.ColumnDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "constraints": {
+            "$ref": "#/components/schemas/DTOs.SchemaDTOs.ColumnConstraints"
+          },
+          "foreignKey": {
+            "$ref": "#/components/schemas/DTOs.SchemaDTOs.ForeignKey"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.SchemaDTOs.ForeignKey": {
+        "type": "object",
+        "properties": {
+          "targetTableId": {
+            "type": "string",
+            "nullable": true
+          },
+          "relationType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.SchemaDTOs.ParseRequest": {
+        "type": "object",
+        "properties": {
+          "rawCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents the request to transform code into a schema."
+      },
+      "DTOs.SchemaDTOs.PositionDto": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Visual placement on the 2D grid."
+      },
+      "DTOs.SchemaDTOs.SchemaResponse": {
+        "type": "object",
+        "properties": {
+          "tables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOs.SchemaDTOs.TableDto"
+            },
+            "description": "List of visual tables with their columns and coordinates.",
+            "nullable": true
+          },
+          "tableRelationships": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOs.SchemaDTOs.TableRelationship"
+            },
+            "description": "List of logical relationships between tables (1:1, 1:N, M:N).",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The final ERD structure generated by Gemini AI."
+      },
+      "DTOs.SchemaDTOs.TableDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "isJunctionTable": {
+            "type": "boolean"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOs.SchemaDTOs.ColumnDto"
+            },
+            "nullable": true
+          },
+          "position": {
+            "$ref": "#/components/schemas/DTOs.SchemaDTOs.PositionDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DTOs.SchemaDTOs.TableRelationship": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceTableId": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetTableId": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a logical link between two tables in the schema."
+      },
+      "Microsoft.AspNetCore.Mvc.ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "Models.Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique identifier for the project.",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the database schema.",
+            "nullable": true,
+            "example": "E-Commerce System"
+          },
+          "contentJson": {
+            "type": "string",
+            "description": "The core ERD data stored as a stringified JSON. \r\nContains tables, columns, positions, and relationships.",
+            "nullable": true,
+            "example": "{\"tables\":[{\"id\":\"1\",\"name\":\"Users\",\"columns\":[...]}]}"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp of when the project was created.",
+            "format": "date-time",
+            "example": "2026-02-25T15:49:26Z"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SwaggerExamples.CommonErrorExamples.InternalServerError": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "traceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Input your token only (e.g., eyJhbGciOiJIUzI1...)",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "1. Identity & Security",
+      "description": "### 🔐 Access Control & User Identity\n\nThis section handles the entry point of the ERD Pro platform. It is responsible for creating new accounts and authenticating existing users.\n\n#### **Authentication Flow:**\n* **Registration**: Collects user details and initializes a secure profile.\n* **Token Issuance**: Both login and registration return a **JWT (JSON Web Token)**.\n* **State Management**: Authentication is stateless; the client must store the token for subsequent requests.\n\n| Feature | Implementation | Purpose |\n| :--- | :--- | :--- |\n| **Credential Storage** | Identity Password Hashing | Securely stores user passwords. |\n| **Session Security** | Bearer Token Strategy | Standard JWT implementation for authorization. |\n\n> **Tip:** Use the `Token` returned in the response to authorize requests in other sections of the API."
+    },
+    {
+      "name": "2. Projects Management",
+      "description": "### 🏗️ ERD Design & Schema Engine\n\nThis module is the heart of ERD Pro. It acts as a specialized storage engine for your database designs, allowing for complex schema persistence and retrieval.\n\n#### **💡 Key Architecture Features:**\n* **JSON Schema Storage**: Highly optimized handling of large stringified JSON objects representing tables and relations.\n* **Stateless Management**: Each project is securely sandboxed to the authenticated user via JWT Claims.\n* **Atomic Synchronization**: Ensures that project metadata (Name) and visual data (ContentJson) are updated in a single database transaction.\n\n#### **📊 Operational Logic:**\n| Operation | Data Strategy | Format |\n| :--- | :--- | :--- |\n| **Listing** | Summarized Metadata (No JSON) | JSON Summary |\n| **Detailed View** | Full Schema Extraction | Deep JSON Object |\n| **Persistence** | UPSERT (Update or Insert) | Raw JSON String |\n\n> **Pro Tip:** When loading a project into the canvas, use the `GetById` endpoint to fetch the full `ContentJson` and parse it on the client side."
+    },
+    {
+      "name": "3. AI Schema Engine",
+      "description": "### 🤖 AI-Powered Architect (Gemini 3 Flash)\n\nThe intelligence layer of ERD Pro that bridges the gap between raw code and visual database design.\n\n#### **Capabilities:**\n* **Code to ERD**: Transforms C# Classes or SQL DDL into structured JSON schemas.\n* **ERD to Code**: Reverse-engineers visual designs back into production-ready scripts.\n* **Intelligent Layout**: AI-calculated positioning to prevent table overlapping on the canvas.\n\n| Input Type | Model | Output |\n| :--- | :--- | :--- |\n| Raw Code / SQL | Gemini 3 Flash | Visual JSON Schema |\n\n🔒 **Performance**: Real-time structural analysis with low-latency response."
+    }
+  ]
+}

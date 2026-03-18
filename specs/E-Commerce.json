@@ -1,0 +1,3709 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "🚜 HeavyTrack: Industrial Machinery E-Commerce API",
+    "description": "### 🌐 Overview\n**HeavyTrack** is a high-performance industrial commerce engine designed specifically for the **Heavy Machinery & Equipment** sector. It streamlines the transition between digital browsing and real-world industrial logistics.\n\n#### 🚀 Core System Capabilities\n* **Smart Machinery Catalog**: A dynamic inventory system supporting high-resolution media (via **Cloudinary**), technical PDF brochures, and flexible JSON-based specifications.\n* **Omnichannel Order Lifecycle**: A robust transactional engine that handles both **Purchase** and **Rental** workflows with integrated **Twilio/SMTP** notification triggers.\n* **Administrative Governance**: Advanced BI Dashboards and moderation controls built on optimized **Dapper** queries for real-time inventory and sales insights.\n* **Architectural Integrity**: Implements the **Specification Pattern** and **Unit of Work** for atomic database transactions and clean, scalable business logic.\n\n#### 🔑 Security & Identity\nSecured via **ASP.NET Identity Core** and **JWT Bearer Authentication**. All administrative endpoints enforce strict **Role-Based Access Control (RBAC)** to protect customer PII and sensitive sales data.",
+    "contact": {
+      "name": "Khaled Ayman",
+      "url": "https://github.com/khaledaymn",
+      "email": "khaled654ayman0@gmail.com"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Authentication/Register": {
+      "post": {
+        "tags": [
+          "1. Authentication & Security"
+        ],
+        "summary": "Register a new user account",
+        "description": "### 🚀 Account Onboarding\n\nThis endpoint creates a new user account using ASP.NET Core Identity. Upon success, it automatically assigns a role and generates a JWT token.\n\n#### **🔒 Internal Logic & Security:**\n| Step | Action | Details |\n| :--- | :--- | :--- |\n| **1. Validation** | Model State Check | Validates email format and password complexity. |\n| **2. Identity** | User Creation | Stores user in `AspNetUsers` via `UserManager`. |\n| **3. RBAC** | Role Assignment | Automatically assigns `Admin` role if FirstName is 'Admin', otherwise `User`. |\n| **4. Security** | Token Generation | Issues a JWT with `Name`, `Email`, and `Jti` claims. |\n\n> **Note:** The `Token` returned should be used in the `Authorization` header for subsequent requests.",
+        "operationId": "PostRegister",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.RegisterDTO"
+              },
+              "example": {"firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, District 5","password":"P@ssw0rd123!"}
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.RegisterDTO"
+              },
+              "example": {"firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, District 5","password":"P@ssw0rd123!"}
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.RegisterDTO"
+              },
+              "example": {"firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, District 5","password":"P@ssw0rd123!"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":"user-guid-id-001","firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, District 5","message":"Registration successful","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMSIsImVtYWlsIjoia2hhbGVk...","roles":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":"user-guid-id-001","firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, District 5","message":"Registration successful","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMSIsImVtYWlsIjoia2hhbGVk...","roles":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":"user-guid-id-001","firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, District 5","message":"Registration successful","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMSIsImVtYWlsIjoia2hhbGVk...","roles":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":null,"firstName":null,"lastName":null,"email":null,"phoneNumber":null,"address":null,"message":"Validation failed: User with this email already exists.","token":null,"roles":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":null,"firstName":null,"lastName":null,"email":null,"phoneNumber":null,"address":null,"message":"Validation failed: User with this email already exists.","token":null,"roles":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":null,"firstName":null,"lastName":null,"email":null,"phoneNumber":null,"address":null,"message":"Validation failed: User with this email already exists.","token":null,"roles":null}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Authentication/Login": {
+      "post": {
+        "tags": [
+          "1. Authentication & Security"
+        ],
+        "summary": "Authenticate user and get token",
+        "description": "### 🔑 Secure Authentication\n\nVerifies credentials against the Identity database. If valid, it returns a JWT containing the user's specific claims and roles.\n\n#### **🎫 Generated Token Claims:**\n| Claim Type | Source | Value Example |\n| :--- | :--- | :--- |\n| `Name` | `user.UserName` | `john.doe@example.com` |\n| `Email` | `user.Email` | `user@domain.com` |\n| `Role` | `IdentityRole` | `User` or `Admin` |\n| `Jti` | `Guid.NewGuid()` | `Unique-Token-ID` |\n\n#### **🛠️ Special Logic:**\n* **Admin Auto-Creation**: If the Admin email from `appsettings` is used and doesn't exist, the system automatically registers it.\n* **Expiration**: Token is valid for the duration specified in `JWT:DurationInDays` (found in configuration).",
+        "operationId": "PostLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.LoginDTO"
+              },
+              "example": {"email":"khaled.ayman@example.com","password":"P@ssw0rd123!"}
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.LoginDTO"
+              },
+              "example": {"email":"khaled.ayman@example.com","password":"P@ssw0rd123!"}
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.LoginDTO"
+              },
+              "example": {"email":"khaled.ayman@example.com","password":"P@ssw0rd123!"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":"3fa85f64-5717-4562-b3fc-2c963f66afa6","firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, Egypt","message":"Login successful.","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","roles":"User"}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":"3fa85f64-5717-4562-b3fc-2c963f66afa6","firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, Egypt","message":"Login successful.","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","roles":"User"}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":"3fa85f64-5717-4562-b3fc-2c963f66afa6","firstName":"Khaled","lastName":"Ayman","email":"khaled.ayman@example.com","phoneNumber":"01098765432","address":"New Cairo, Egypt","message":"Login successful.","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","roles":"User"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":null,"firstName":null,"lastName":null,"email":null,"phoneNumber":null,"address":null,"message":"Invalid email or password.","token":null,"roles":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":null,"firstName":null,"lastName":null,"email":null,"phoneNumber":null,"address":null,"message":"Invalid email or password.","token":null,"roles":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO"
+                },
+                "example": {"id":null,"firstName":null,"lastName":null,"email":null,"phoneNumber":null,"address":null,"message":"Invalid email or password.","token":null,"roles":null}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Authentication/ForgetPassword": {
+      "post": {
+        "tags": [
+          "1. Authentication & Security"
+        ],
+        "summary": "Initiate password reset process",
+        "description": "### 📧 Password Recovery Engine\n\nStarts the recovery flow by sending a secure reset link to the user's registered email address.\n\n#### **⚙️ Workflow:**\n| Stage | Action | Details |\n| :--- | :--- | :--- |\n| **1. Identity Check** | User Lookup | Verifies if the email exists in the Identity database. |\n| **2. Token Generation** | Security Token | Generates a one-time-use **Password Reset Token**. |\n| **3. Dispatch** | Email Service | Sends an HTML email containing a localized reset link. |\n\n> **Note:** The reset link contains an URL-encoded token and the user's email as query parameters.",
+        "operationId": "PostForgetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ForgetPasswordDTO"
+              },
+              "example": {"email":"john.doe@example.com"}
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ForgetPasswordDTO"
+              },
+              "example": {"email":"john.doe@example.com"}
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ForgetPasswordDTO"
+              },
+              "example": {"email":"john.doe@example.com"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data updated successfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data updated successfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data updated successfully.","data":null}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Authentication/ResetPassword": {
+      "post": {
+        "tags": [
+          "1. Authentication & Security"
+        ],
+        "summary": "Update password using reset token",
+        "description": "### 🔐 Password Finalization\n\nCompletes the password recovery flow. This endpoint verifies the security token sent via email and updates the user's password in the Identity system.\n\n#### **⚙️ Verification Steps:**\n| Stage | Action | Logic |\n| :--- | :--- | :--- |\n| **1. Token Validation** | Cryptographic Check | Ensures the token was issued by this server and hasn't expired. |\n| **2. Complexity Check** | Identity Rules | Validates that the new password meets the 8-character/symbols policy. |\n| **3. Database Update** | Password Hash | Replaces the old hash with a new one in the `AspNetUsers` table. |\n\n> **Note:** Once successful, the old token becomes invalid and the user can log in with the new credentials.",
+        "operationId": "PostResetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ResetPasswordDTO"
+              },
+              "example": {"password":"NewP@ssw0rd2025!","email":"khaled.ayman@example.com","token":"CfDJ8BA5A...base64Token..."}
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ResetPasswordDTO"
+              },
+              "example": {"password":"NewP@ssw0rd2025!","email":"khaled.ayman@example.com","token":"CfDJ8BA5A...base64Token..."}
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ResetPasswordDTO"
+              },
+              "example": {"password":"NewP@ssw0rd2025!","email":"khaled.ayman@example.com","token":"CfDJ8BA5A...base64Token..."}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Password reset successful"}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Password reset successful"}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Password reset successful"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Failed to reset password: Invalid token or password complexity not met."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Failed to reset password: Invalid token or password complexity not met."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Failed to reset password: Invalid token or password complexity not met."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Authentication/ChangePassword": {
+      "post": {
+        "tags": [
+          "1. Authentication & Security"
+        ],
+        "summary": "Update current user password",
+        "description": "### 🔄 Password Rotation\n\nAllows an authenticated user to update their credentials. This process requires a valid old password and enforces strict identity validation.\n\n#### **⚠️ Validation Rules:**\n| Rule | Requirement |\n| :--- | :--- |\n| **Consistency** | New password cannot be identical to the old password. |\n| **Identity Check** | User ID must exist in the database. |\n| **Security** | Old password must match the stored hash in `AspNetUsers`. |\n\n> **Info:** This operation is idempotent in terms of security; it replaces the hash but does not log the user out.",
+        "operationId": "PostChangePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ChangePasswordDTO"
+              },
+              "example": {"oldPassword":"CurrentPassword123!","newPassword":"NewStrongPassword2026!","userId":"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ChangePasswordDTO"
+              },
+              "example": {"oldPassword":"CurrentPassword123!","newPassword":"NewStrongPassword2026!","userId":"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.AuthenticationDTOs.ChangePasswordDTO"
+              },
+              "example": {"oldPassword":"CurrentPassword123!","newPassword":"NewStrongPassword2026!","userId":"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Password changed successfully"}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Password changed successfully"}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Password changed successfully"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Old password is incorrect."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Old password is incorrect."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Old password is incorrect."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Brands/GetAllBrands": {
+      "get": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Retrieve all unique heavy equipment brands",
+        "description": "### 🚜 Heavy Machinery Brands\n\nExtracts a unique list of manufacturers and brands from the inventory. This list represents the global leaders in heavy construction and earthmoving equipment.\n\n#### **⚙️ Technical Logic:**\n| Aspect | Detail |\n| :--- | :--- |\n| **Source** | Fetched dynamically from `Products` table. |\n| **Filtering** | Excludes empty or null brand entries. |\n| **Performance** | Uses `DISTINCT` SQL optimization for fast retrieval. |\n\n> **Info:** Use these brand names to filter product searches or build navigation menus for heavy equipment categories like Bulldozers, Excavators, and Cranes.",
+        "operationId": "GetAllBrands",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": ["Caterpillar (CAT)","Komatsu","Volvo Construction Equipment","John Deere","Liebherr","Hitachi"]
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": ["Caterpillar (CAT)","Komatsu","Volvo Construction Equipment","John Deere","Liebherr","Hitachi"]
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": ["Caterpillar (CAT)","Komatsu","Volvo Construction Equipment","John Deere","Liebherr","Hitachi"]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Categories/AddCategory": {
+      "post": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Create a new product category",
+        "description": "### 📂 Catalog Organization\n\nAdds a new category to the store hierarchy. This endpoint processes image uploads and stores them securely in **Cloudinary**.\n\n#### **⚠️ Validation Constraints:**\n| Constraint | Requirement |\n| :--- | :--- |\n| **Allowed Formats** | `.png`, `.jpg`, `.jpeg` |\n| **Maximum Size** | 3 MB |\n| **Media Hosting** | Cloudinary (PublicId stored for management) |\n\n> **Note:** The category name is used for indexing and should be descriptive of the heavy equipment or products within.",
+        "operationId": "PostCategory",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"mesaage":"Category added successfully."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"mesaage":"Category added successfully."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"mesaage":"Category added successfully."}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"File cannot be more than 3 MB!"}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"File cannot be more than 3 MB!"}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"File cannot be more than 3 MB!"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Categories/GetAllCategories": {
+      "get": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "List categories with filters and pagination",
+        "description": "### 🔍 Smart Catalog Discovery\n\nRetrieves a paginated list of product categories. Supports dynamic searching and server-side sorting to optimize mobile and web performance.\n\n#### **⚙️ Filtering & Pagination Logic:**\n| Feature | Behavior | Source |\n| :--- | :--- | :--- |\n| **Search** | Case-insensitive partial matching on Name. | `CategorySpecification` |\n| **Sorting** | Dynamic sorting via `SortProp` and `SortDirection`. | `ISpecification` Pattern |\n| **Pagination** | Enforces a max `PageSize` of 10 for performance. | `CategoryParams` |\n\n> **Note:** Total record count is returned in the response to help calculate front-end pagination links.",
+        "operationId": "GetCategories",
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortProp",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortProp"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.CategoryDTOs.CategoryDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":1,"data":[{"id":1,"name":"Bulldozers","description":"High-power earthmoving machinery.","imageURL":"https://res.cloudinary.com/demo/image/upload/v1/cat1.jpg","imageThumbnailURL":"https://res.cloudinary.com/demo/image/upload/w_100/cat1.jpg","imagePublicId":"cat_001"}]}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.CategoryDTOs.CategoryDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":1,"data":[{"id":1,"name":"Bulldozers","description":"High-power earthmoving machinery.","imageURL":"https://res.cloudinary.com/demo/image/upload/v1/cat1.jpg","imageThumbnailURL":"https://res.cloudinary.com/demo/image/upload/w_100/cat1.jpg","imagePublicId":"cat_001"}]}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.CategoryDTOs.CategoryDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":1,"data":[{"id":1,"name":"Bulldozers","description":"High-power earthmoving machinery.","imageURL":"https://res.cloudinary.com/demo/image/upload/v1/cat1.jpg","imageThumbnailURL":"https://res.cloudinary.com/demo/image/upload/w_100/cat1.jpg","imagePublicId":"cat_001"}]}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Invalid pagination parameters. Page index and size must be greater than 0."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Invalid pagination parameters. Page index and size must be greater than 0."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Invalid pagination parameters. Page index and size must be greater than 0."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Categories/GetCategoryById/{id}": {
+      "get": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Retrieve a specific category by ID",
+        "description": "### 🎯 Targeted Retrieval\n\nFetches full details of a single category using its unique identifier. This includes localized metadata and optimized image URLs from **Cloudinary**.\n\n#### **⚙️ Retrieval Process:**\n| Step | Action | Detail |\n| :--- | :--- | :--- |\n| **1. Specification** | Logic Application | Uses `CategorySpecification(id)` to filter database. |\n| **2. Validation** | Existence Check | Throws `KeyNotFoundException` if ID doesn't exist. |\n| **3. Mapping** | DTO Transformation | Converts domain model to `CategoryDTO`. |\n\n> **Pro Tip:** Use the `ImageThumbnailURL` for list views and `ImageURL` for detailed headers to optimize bandwidth.",
+        "operationId": "GetCategoryById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.CategoryDTOs.CategoryDTO"
+                },
+                "example": {"id":5,"name":"Cranes & Lifting","description":"Heavy duty tower and mobile cranes.","imageURL":"https://res.cloudinary.com/demo/image/upload/v1/crane.jpg","imageThumbnailURL":"https://res.cloudinary.com/demo/image/upload/w_200/crane.jpg","imagePublicId":"categories/crane_001"}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.CategoryDTOs.CategoryDTO"
+                },
+                "example": {"id":5,"name":"Cranes & Lifting","description":"Heavy duty tower and mobile cranes.","imageURL":"https://res.cloudinary.com/demo/image/upload/v1/crane.jpg","imageThumbnailURL":"https://res.cloudinary.com/demo/image/upload/w_200/crane.jpg","imagePublicId":"categories/crane_001"}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.CategoryDTOs.CategoryDTO"
+                },
+                "example": {"id":5,"name":"Cranes & Lifting","description":"Heavy duty tower and mobile cranes.","imageURL":"https://res.cloudinary.com/demo/image/upload/v1/crane.jpg","imageThumbnailURL":"https://res.cloudinary.com/demo/image/upload/w_200/crane.jpg","imagePublicId":"categories/crane_001"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Category with ID 99 not found."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Category with ID 99 not found."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Category with ID 99 not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Categories/UpdateCategory": {
+      "put": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Update an existing category",
+        "description": "### 🔄 Smart Catalog Update\n\nUpdates category metadata and manages image replacement. The system automatically detects new image uploads, removes the old asset from **Cloudinary**, and updates the database.\n\n#### **⚙️ Update Logic:**\n| Feature | Behavior |\n| :--- | :--- |\n| **Partial Update** | Null values for `Name` or `Description` are ignored; existing data is kept. |\n| **Image Cleanup** | If a new `Image` is sent, the old `ImagePublicId` is used to delete the previous file. |\n| **Validation** | Enforces same image constraints (3MB, formats) as creation. |\n\n> **Note:** The `Id` is mandatory to locate the correct record in the database.",
+        "operationId": "PutCategory",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "example": {"id":5,"name":"Lifting & Crane Equipment","description":"Updated description for cranes and heavy lifting gear.","image":null},
+              "encoding": {
+                "Image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Category updated IsSuccessfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Category updated IsSuccessfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Category updated IsSuccessfully.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"File cannot be more than 3 MB!"}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"File cannot be more than 3 MB!"}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"File cannot be more than 3 MB!"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Categories/DeleteCategory/{id}": {
+      "delete": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Permanently remove a category",
+        "description": "### 🗑️ Content Removal & Cleanup\n\nPerforms a hard delete of the category record. This endpoint includes an automated cleanup process to ensure storage efficiency.\n\n#### **⚙️ Deletion Workflow:**\n| Stage | Action | Logic |\n| :--- | :--- | :--- |\n| **1. Lookup** | Existence Check | Uses `CategorySpecification` to find the target. |\n| **2. Media Cleanup** | Cloudinary API | If `ImagePublicId` exists, the remote file is deleted. |\n| **3. Database** | Row Removal | Deletes the record from the `Categories` table. |\n\n⚠️ **Warning:** This action is irreversible. All associations with products may be affected depending on database constraints.",
+        "operationId": "DeleteCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Category deleted IsSuccessfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Category deleted IsSuccessfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Category deleted IsSuccessfully.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Category with ID 99 not found."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Category with ID 99 not found."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Category with ID 99 not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Products/Create": {
+      "post": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Create a new heavy equipment product",
+        "description": "### 🏗️ Industrial Product Onboarding\n\nThis endpoint handles the complete registration of a product, including transactional media uploads and dynamic attribute serialization.\n\n#### **🚀 Advanced Features:**\n| Feature | Logic | Action |\n| :--- | :--- | :--- |\n| **Media Mix** | Images, Videos, PDFs | Multi-server upload logic (Cloudinary + Local). |\n| **Transactions** | Database Integrity | Rollbacks everything if any media upload fails. |\n| **Dynamic Attributes** | JSON Deserialization | Converts the string input into a searchable dictionary. |\n\n> **Note:** PDF brochures are stored on the local server, while images/videos are hosted on Cloudinary.",
+        "operationId": "PostProduct",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Brand",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Model",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "AdditionalAttributes",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "AdditionalAttributesJson",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Quantity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CategoryId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ConfirmationStatus",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "MainImage"
+                ],
+                "type": "object",
+                "properties": {
+                  "MainImage": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "AdditionalMedia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "MainImage": {
+                  "style": "form"
+                },
+                "AdditionalMedia": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Product created IsSuccessfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Product created IsSuccessfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Product created IsSuccessfully.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"Invalid format for AdditionalAttributes."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"Invalid format for AdditionalAttributes."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"Invalid format for AdditionalAttributes."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Products/Update": {
+      "put": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Update existing product and manage its media",
+        "description": "### 🔄 Dynamic Inventory Update\n\nA powerful endpoint that performs partial updates on product data and handles complex media management (Add/Delete/Replace).\n\n#### **⚙️ Media Handling Logic:**\n| Operation | Action | Process |\n| :--- | :--- | :--- |\n| **Main Image Replace** | Replacement | Uploads new, then deletes old from Cloudinary. |\n| **Gallery Cleanup** | Selective Deletion | Deletes specific items in `MediaToDelete` list. |\n| **Gallery Expansion** | Addition | Appends new `AdditionalMedia` to the product gallery. |\n\n> **Security Rule:** If a product is not found, it returns `404 Not Found`. Validation errors in files (Size/Extension) return `400 BadRequest`.",
+        "operationId": "PutProduct",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Brand",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Model",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Quantity",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "AdditionalAttributes",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "AdditionalAttributesJson",
+            "in": "query",
+            "style": "deepObject",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CategoryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "MediaToDelete",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "ConfirmationStatus",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MainImage": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "AdditionalMedia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "example": {"id":102,"name":"CAT Excavator 320 - Refurbished","description":null,"brand":null,"model":null,"quantity":3,"additionalAttributes":"{\"Condition\": \"Excellent\", \"LastMaintenance\": \"2024-01-01\"}","status":null,"categoryId":null,"mainImage":null,"additionalMedia":null,"mediaToDelete":["old_image_id_1","old_video_id_2"],"confirmationStatus":null},
+              "encoding": {
+                "MainImage": {
+                  "style": "form"
+                },
+                "AdditionalMedia": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Product created IsSuccessfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Product created IsSuccessfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Product created IsSuccessfully.","data":null}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 102 not found."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 102 not found."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 102 not found."}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Invalid file type. Allowed types are: png, jpg, jpeg..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Invalid file type. Allowed types are: png, jpg, jpeg..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Invalid file type. Allowed types are: png, jpg, jpeg..."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Products/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Permanently remove a product and its media assets",
+        "description": "### 🗑️ Complete Deletion Flow\n\nThis is a destructive operation that removes the product record and triggers a full cleanup of associated binary assets.\n\n#### **⚙️ Automated Cleanup Logic:**\n| Resource Type | Action | Service Target |\n| :--- | :--- | :--- |\n| **Main Image** | Hard Delete | Cloudinary Storage |\n| **Product Gallery** | Bulk Delete | Cloudinary API (All associated Public IDs) |\n| **PDF Brochures** | File System Delete | Server `wwwroot/Uploads` folder |\n| **Product Record** | DB Removal | `Products` & `ProductMedia` tables |\n\n> **⚠️ Warning:** This action cannot be undone. All media links and inventory data for this product will be lost forever.",
+        "operationId": "DeleteProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 102 not found.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 102 not found.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 102 not found.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Products/GetAllProducts": {
+      "get": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Advanced Search & Filtering for Products",
+        "description": "### 🚜 Industrial Grade Filtering\n\nThis endpoint provides a robust interface to explore the heavy equipment catalog. It supports multi-criteria filtering, dynamic sorting, and optimized server-side pagination.\n\n#### **⚙️ Search & Filter Capabilities:**\n| Feature | Description | Support |\n| :--- | :--- | :--- |\n| **Full-Text Search** | Matches keywords in Name and Description. | ✅ |\n| **Technical Filters** | Filter by `Brand`, `Model`, and `Status`. | ✅ |\n| **Admin Status** | Filter by `ConfirmationStatus` (e.g., Approved). | ✅ |\n| **Inventory** | Filter by available `Quantity`. | ✅ |\n\n#### **📊 Response Meta-Data:**\nThe response is wrapped in a `PaginationResponse` which includes `TotalCount`. This allows front-end applications to build accurate pagination controls.\n\n> **Performance Note:** Page size is capped at 10 items by default to ensure fast response times.",
+        "operationId": "GetAllProducts",
+        "parameters": [
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CategoryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Brand",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Model",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Quantity",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ConfirmationStatus",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortProp",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortProp"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortDirection"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.ProductDTOs.ProductDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":1,"data":[{"id":1,"name":"CAT Bulldozer D6","description":null,"additionalAttributes":null,"status":"New","brand":"Caterpillar","model":"D6-2024","mainImageURL":"https://cloudinary.com/cat-d6.jpg","imagePublicId":null,"categoryId":null,"quantity":0,"categoryName":null,"createdAt":"0001-01-01T00:00:00","confirmationStatus":"Approved","productMedia":[]}]}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.ProductDTOs.ProductDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":1,"data":[{"id":1,"name":"CAT Bulldozer D6","description":null,"additionalAttributes":null,"status":"New","brand":"Caterpillar","model":"D6-2024","mainImageURL":"https://cloudinary.com/cat-d6.jpg","imagePublicId":null,"categoryId":null,"quantity":0,"categoryName":null,"createdAt":"0001-01-01T00:00:00","confirmationStatus":"Approved","productMedia":[]}]}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.ProductDTOs.ProductDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":1,"data":[{"id":1,"name":"CAT Bulldozer D6","description":null,"additionalAttributes":null,"status":"New","brand":"Caterpillar","model":"D6-2024","mainImageURL":"https://cloudinary.com/cat-d6.jpg","imagePublicId":null,"categoryId":null,"quantity":0,"categoryName":null,"createdAt":"0001-01-01T00:00:00","confirmationStatus":"Approved","productMedia":[]}]}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Invalid format for AdditionalAttributes.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Invalid format for AdditionalAttributes.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Invalid format for AdditionalAttributes.","data":null}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"No products found.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"No products found.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"No products found.","data":null}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Products/GetById/{id}": {
+      "get": {
+        "tags": [
+          "2. Catalog & Products"
+        ],
+        "summary": "Retrieve full product profile and media gallery",
+        "description": "### 💎 Detailed Asset Inspection\n\nFetches the complete data for a specific product, including its dynamic technical attributes and all associated media assets (Gallery).\n\n#### **🎥 Mixed Media Engine:**\nThe system automatically categorizes assets into types to help the front-end choose the right player/viewer:\n| MediaType | Supported Extensions | Rendering Hint |\n| :--- | :--- | :--- |\n| **image** | .png, .jpg, .webp, .svg | Use `<img>` tag with `ImageThumbnailURL`. |\n| **video** | .mp4, .webm, .mov, .mkv | Use `<video>` player with `MediaURL`. |\n| **pdf** | .pdf | Open `MediaURL` in a new browser tab/iframe. |\n\n> **Note:** All attributes in `AdditionalAttributes` are returned as a JSON string and should be parsed on the client-side.",
+        "operationId": "GetProductById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.ProductDTOs.ProductDTO"
+                },
+                "example": {"id":101,"name":"CAT 320 Hydraulic Excavator","description":null,"additionalAttributes":"{\"OperatingWeight\": \"22500 kg\", \"BucketCapacity\": \"1.2 m3\"}","status":null,"brand":"Caterpillar","model":null,"mainImageURL":null,"imagePublicId":null,"categoryId":null,"quantity":0,"categoryName":"Excavators","createdAt":"0001-01-01T00:00:00","confirmationStatus":null,"productMedia":[{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"image"},{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"video"},{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"pdf"}]}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.ProductDTOs.ProductDTO"
+                },
+                "example": {"id":101,"name":"CAT 320 Hydraulic Excavator","description":null,"additionalAttributes":"{\"OperatingWeight\": \"22500 kg\", \"BucketCapacity\": \"1.2 m3\"}","status":null,"brand":"Caterpillar","model":null,"mainImageURL":null,"imagePublicId":null,"categoryId":null,"quantity":0,"categoryName":"Excavators","createdAt":"0001-01-01T00:00:00","confirmationStatus":null,"productMedia":[{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"image"},{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"video"},{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"pdf"}]}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.ProductDTOs.ProductDTO"
+                },
+                "example": {"id":101,"name":"CAT 320 Hydraulic Excavator","description":null,"additionalAttributes":"{\"OperatingWeight\": \"22500 kg\", \"BucketCapacity\": \"1.2 m3\"}","status":null,"brand":"Caterpillar","model":null,"mainImageURL":null,"imagePublicId":null,"categoryId":null,"quantity":0,"categoryName":"Excavators","createdAt":"0001-01-01T00:00:00","confirmationStatus":null,"productMedia":[{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"image"},{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"video"},{"mediaURL":"...","imageThumbnailURL":null,"mediaPublicId":null,"mediaType":"pdf"}]}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 101 not found.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 101 not found.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product with ID 101 not found.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Orders/GetAllOrders": {
+      "get": {
+        "tags": [
+          "3. Sales & Order Lifecycle"
+        ],
+        "summary": "Advanced Order Tracking & Administrative Review",
+        "description": "### 📋 Global Order Supervision\n\nRetrieves a comprehensive, paginated list of all customer orders. This endpoint is designed for administrative oversight, providing deep insights into machinery transactions and lifecycle stages.\n\n#### **⚙️ Business Intelligence Features:**\n| Feature | Functionality |\n| :--- | :--- |\n| **Status Mapping** | Automatically translates internal Arabic states (طلب جديد، تم إنهاء الطلب) into standardized English labels (New, Completed). |\n| **Dynamic Specs** | Utilizes the **OrderSpecification** pattern for multi-criteria filtering (Search, ProductId, Date). |\n| **Inventory Context** | Includes full item details such as `Brand`, `Model`, and `RentalPeriod`. |\n\n#### **🔐 Security Policy:**\n* **Role Restricted**: Strictly limited to users with the `Admin` role.\n* **Audit Logging**: All retrieval attempts and filter parameters are logged via Serilog for security auditing.",
+        "operationId": "GetAllOrders",
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ProductId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "OrderStatus",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ProductStatus",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "RentalPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SortProp",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortProp"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.OrderDTOs.OrderDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":150,"data":[{"id":7050,"date":"2024-03-18T12:00:00+02:00","status":"Processing","userName":"Michael Scott","email":"m.scott@paper.com","phoneNumber":"+15550199","address":"Scranton Business Park, PA","orderItems":[{"productId":101,"productName":"CAT Bulldozer D6","brand":"Caterpillar","model":"D6-2024","productStatus":"Purchase","rentalPeriod":null}]}]}
+              }
+            }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Admin data not found."}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"PageIndex and PageSize must be positive integers."}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Access denied. Admin role required."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Orders/GetOrdersByOrderId/{orderId}": {
+      "get": {
+        "tags": [
+          "3. Sales & Order Lifecycle"
+        ],
+        "summary": "Retrieve individual order details",
+        "description": "### 🔍 Deep Order Inspection\n\nFetches the full profile of a specific order by its unique ID. This includes customer contact information, delivery address, and the detailed list of machinery items associated with the transaction.\n\n#### **⚙️ Retrieval Logic:**\n| Component | Logic |\n| :--- | :--- |\n| **Specification** | Uses **OrderSpecification(orderId)** to fetch the entity and its related Product data. |\n| **Status Mapping** | Converts the internal `OrderStatus` Enum into a readable string label. |\n| **Error Handling** | Returns a **404 Not Found** if the ID does not exist in the database. |\n\n> **Security Note:** This endpoint is accessible by both **Admins** (for oversight) and **Users** (to view their own order history).",
+        "operationId": "GetOrderById",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.OrderDTOs.OrderDTO"
+                },
+                "example": {"id":8820,"date":"2024-03-25T11:00:00+02:00","status":"Shipped","userName":"Robert California","email":"r.california@ceo.com","phoneNumber":"+12025550112","address":"1000 Corporate Way, Florida","orderItems":[{"productId":205,"productName":"Komatsu PC210LC Excavator","brand":"Komatsu","model":"LC-11","productStatus":"Rent","rentalPeriod":"3 Months"}]}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Order with ID 8820 not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Orders/UpdateOrder/{orderId}": {
+      "put": {
+        "tags": [
+          "3. Sales & Order Lifecycle"
+        ],
+        "summary": "Update order status and lifecycle state",
+        "description": "### 🔄 Order Status Transition\n\nAllows administrators or authorized users to advance an order through its lifecycle. This endpoint handles the translation of high-level status labels into internal system logic.\n\n#### **⚙️ Status Mapping Logic:**\nThe following labels are processed and mapped to the database:\n| Provided Label | Internal State | Business Meaning |\n| :--- | :--- | :--- |\n| **New** | طلب جديد | Initial placement, awaiting review. |\n| **Processing** | تحت الاجراء | Logistics or financing is being handled. |\n| **Completed** | تم انهاء الطلب | Machinery delivered and transaction closed. |\n| **Cancelled** | الغاء الطلب | Order terminated. |\n\n#### **⚠️ Validation Rules:**\n* **Existence**: Returns **404 Not Found** if the `Id` does not match an existing order.\n* **Input**: Returns **400 BadRequest** if the provided status label is not recognized.",
+        "operationId": "PutOrder",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.OrderDTOs.UpdateOrderDTO"
+              },
+              "example": {"id":7050,"status":"Completed"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Order status updated successfully.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"isSuccess":false,"message":"Product ID must be a positive integer.","data":null}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"No orders found matching the provided criteria."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Orders/DeleteOrder/{orderId}": {
+      "delete": {
+        "tags": [
+          "3. Sales & Order Lifecycle"
+        ],
+        "summary": "Permanently remove an order record",
+        "description": "### 🗑️ Permanent Data Removal\n\nExecutes a hard delete on a specific order and its associated data based on the provided ID. This action is irreversible.\n\n#### **⚙️ Execution Workflow:**\n| Phase | Action | Detail |\n| :--- | :--- | :--- |\n| **1. Specification** | Verification | Uses `OrderSpecification(orderId)` to ensure the record exists before attempting deletion. |\n| **2. Deletion** | Repository Call | Removes the entity from the `Orders` repository. |\n| **3. Persistence** | Unit of Work | Commits the transaction via `Complete()` to finalize changes in SQL Server. |\n\n#### **⚠️ Response Constraints:**\n* **204 No Content**: Successfully deleted. No body returned as the resource no longer exists.\n* **400 BadRequest**: Triggered if the `orderId` provided is less than or equal to zero.\n* **404 Not Found**: Triggered if the order does not exist or has already been deleted.",
+        "operationId": "DeleteOrder",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Invalid order ID. Must be a positive integer."}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Order not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Orders/Checkout": {
+      "post": {
+        "tags": [
+          "3. Sales & Order Lifecycle"
+        ],
+        "summary": "Finalize purchase and initiate order notifications",
+        "description": "### 🛒 Transaction Processing & Notification Engine\n\nThis endpoint converts a customer's intent into a formal order. It performs a sequence of high-priority background tasks to ensure business continuity.\n\n#### **⚙️ Post-Checkout Workflow:**\n| Sequence | Action | Description |\n| :--- | :--- | :--- |\n| **1. Validation** | Inventory Check | Verifies `ProductId` exists and matches the requested `Status`. |\n| **2. Persistence** | Order Creation | Saves customer details and machinery links to the database. |\n| **3. Notification** | Admin Alert | Sends a high-priority **Email** (and via Twilio/WhatsApp if enabled) to the store manager. |\n| **4. Inventory** | Stock Deduction | Decrements the `Quantity` of the product in the inventory. |\n\n#### **📧 Email Templates:**\nThe system generates a dynamic HTML email based on the `GetEmailTemplate` logic, including product `Brand`, `Model`, and customer `Address` for immediate action.",
+        "operationId": "PostCheckout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.OrderDTOs.CreateOrderDTO"
+              },
+              "example": {"name":"Jane Smith","email":"jane.smith@industrial-solutions.com","phoneNumber":"+12025550114","address":"456 Construction Way, Sector 7, Houston, TX 77001","rentalPeriod":"6 Months","status":"Rent","productId":101}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Checkout initiated successfully. Order notification sent to admin.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Product not found or out of stock."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AdminData/GetAdminData": {
+      "get": {
+        "tags": [
+          "4. Administrative Control"
+        ],
+        "summary": "Retrieve site global information",
+        "description": "### 🌍 Global Metadata Provider\n\nFetches the single configuration row used to populate the store's front-end elements such as titles, logos, and hero sections.\n\n#### **📊 Information Scope:**\n| Field | Content Type | Source |\n| :--- | :--- | :--- |\n| **Branding** | Title & Logo | `AdminData` Table |\n| **Visuals** | Hero Background | Cloudinary Storage |\n| **SEO** | Meta Description | Global Settings |\n\n> **Note:** This endpoint is public and does not require authentication to allow the landing page to load branding data.",
+        "operationId": "GetAdminData",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AdminDataDTOs.AdminDataDTO"
+                },
+                "example": {"id":1,"title":"Al-Oufi Market","description":"The best place to find freelance services and products.","logo":"https://cloudinary.com/oufi-logo.png","heroImage":"https://cloudinary.com/oufi-hero.jpg"}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AdminDataDTOs.AdminDataDTO"
+                },
+                "example": {"id":1,"title":"Al-Oufi Market","description":"The best place to find freelance services and products.","logo":"https://cloudinary.com/oufi-logo.png","heroImage":"https://cloudinary.com/oufi-hero.jpg"}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.AdminDataDTOs.AdminDataDTO"
+                },
+                "example": {"id":1,"title":"Al-Oufi Market","description":"The best place to find freelance services and products.","logo":"https://cloudinary.com/oufi-logo.png","heroImage":"https://cloudinary.com/oufi-hero.jpg"}
+              }
+            }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"No admin data found."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"No admin data found."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"No admin data found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AdminData/AddAdminData": {
+      "post": {
+        "tags": [
+          "4. Administrative Control"
+        ],
+        "summary": "Initialize site configuration",
+        "description": "### 🏗️ Global Initialization\n\nThis endpoint sets the initial branding and metadata for the store. It supports direct image uploads to **Cloudinary**.\n\n#### **⚠️ Business Rules:**\n| Rule | Logic | Action |\n| :--- | :--- | :--- |\n| **Singleton Pattern** | Only one record allowed. | Returns 400 if data exists. |\n| **Media Processing** | Automated Cloudinary Upload. | Processes `Logo` and `AboutImage`. |\n| **Security** | Admin Restricted. | Requires `Role: Admin`. |\n\n> **Note:** If you need to change existing data, use the **Update** endpoint instead.",
+        "operationId": "PostAdminData",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Title"
+                ],
+                "type": "object",
+                "properties": {
+                  "Title": {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  "Description": {
+                    "maxLength": 2000,
+                    "type": "string"
+                  },
+                  "Logo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "AboutImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Title": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Logo": {
+                  "style": "form"
+                },
+                "AboutImage": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data added successfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data added successfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data added successfully.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Admin data already exists. Use update instead."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Admin data already exists. Use update instead."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Admin data already exists. Use update instead."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AdminData/UpdateAdminData": {
+      "put": {
+        "tags": [
+          "4. Administrative Control"
+        ],
+        "summary": "Update global site configuration",
+        "description": "### 🔄 Metadata Synchronization\n\nUpdates the existing branding information. This endpoint allows for partial media updates—if a new image is provided, it replaces the old one in Cloudinary.\n\n#### **⚙️ Update Workflow:**\n| Field | Logic | Requirement |\n| :--- | :--- | :--- |\n| **Text Fields** | Direct Overwrite | `Title` is mandatory. |\n| **Media** | Conditional Upload | Only processes if `Logo` or `AboutImage` is not null. |\n| **Persistence** | Unit of Work | Changes are atomic and saved via `Complete()`. |\n\n> **Security Note:** This operation requires administrative privileges (`Role: Admin`).",
+        "operationId": "PutAdminData",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Id",
+                  "Title"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Title": {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  "Description": {
+                    "maxLength": 2000,
+                    "type": "string"
+                  },
+                  "Logo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "AboutImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Title": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Logo": {
+                  "style": "form"
+                },
+                "AboutImage": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data updated successfully.","data":null}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data updated successfully.","data":null}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.ResultDTO"
+                },
+                "example": {"isSuccess":true,"message":"Admin data updated successfully.","data":null}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": { },
+                "example": {"message":"Admin data not found."}
+              },
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Admin data not found."}
+              },
+              "text/json": {
+                "schema": { },
+                "example": {"message":"Admin data not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ConfirmationStatus/GetAllConfirmationStatus": {
+      "get": {
+        "tags": [
+          "4. Administrative Control"
+        ],
+        "summary": "Retrieve all unique product approval states",
+        "description": "### ⚖️ Verification Lifecycle Discovery\n\nExtracts a unique list of all confirmation statuses currently assigned to products in the database. This is used to populate Admin filters and moderation dashboards.\n\n#### **⚙️ Technical Logic:**\n| Aspect | Detail |\n| :--- | :--- |\n| **Source** | Dynamically scanned from the `Products` table. |\n| **Filtering** | Excludes empty strings and null entries. |\n| **Technology** | Optimized SQL query executed via **Dapper**. |\n\n> **Use Case:** Use these strings as values for the `ConfirmationStatus` parameter in the `GetAllProducts` endpoint to filter by approval state.",
+        "operationId": "GetAllConfirmationStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": ["Pending","Approved","Rejected","Under Review"]
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": ["Pending","Approved","Rejected","Under Review"]
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": ["Pending","Approved","Rejected","Under Review"]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Dashboard/GetDashboardData": {
+      "get": {
+        "tags": [
+          "4. Administrative Control"
+        ],
+        "summary": "Real-time business intelligence summary",
+        "description": "### 📊 Business Insights Engine\n\nProvides a comprehensive overview of the store's performance. It aggregates data across inventory and sales departments using optimized SQL sub-queries.\n\n#### **📈 Data Breakdown Categories:**\n| Category | Logic | Content |\n| :--- | :--- | :--- |\n| **Inventory** | Product Table Scan | Counts by status (Sale, Rent, Purchase). |\n| **Order Lifecycle** | Order Status Tracking | Counts for New, Processing, Completed, and Cancelled. |\n| **Sales Flow** | Cross-Table Reference | Identifies orders based on product nature (Rent/Purchase). |\n\n> **Technical Note:** This endpoint uses **N-prefixing** in SQL to support Arabic characters (شراء/إيجار/بيع) stored in the database status fields.",
+        "operationId": "GetDashboardData",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.DashboardDTOs.DashboardDTO"
+                },
+                "example": {"totalProducts":120,"totalRentProducts":40,"totalPurchaseProducts":50,"totalRentAndPurchaseProducts":30,"totalOrders":85,"totalNewOrders":5,"totalProcessingOrders":10,"totalCompletedOrders":65,"totalCancelledOrders":5,"totalRentOrders":35,"totalPurchaseOrders":30,"totalSalesOrders":20}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.DashboardDTOs.DashboardDTO"
+                },
+                "example": {"totalProducts":120,"totalRentProducts":40,"totalPurchaseProducts":50,"totalRentAndPurchaseProducts":30,"totalOrders":85,"totalNewOrders":5,"totalProcessingOrders":10,"totalCompletedOrders":65,"totalCancelledOrders":5,"totalRentOrders":35,"totalPurchaseOrders":30,"totalSalesOrders":20}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.DashboardDTOs.DashboardDTO"
+                },
+                "example": {"totalProducts":120,"totalRentProducts":40,"totalPurchaseProducts":50,"totalRentAndPurchaseProducts":30,"totalOrders":85,"totalNewOrders":5,"totalProcessingOrders":10,"totalCompletedOrders":65,"totalCancelledOrders":5,"totalRentOrders":35,"totalPurchaseOrders":30,"totalSalesOrders":20}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users/GetAllUsers": {
+      "get": {
+        "tags": [
+          "5. User Management"
+        ],
+        "summary": "Advanced User Directory & Filtering",
+        "description": "### 👥 User Record Management\n\nRetrieves a comprehensive list of registered users. This endpoint is designed for administrative auditing and CRM purposes.\n\n#### **⚙️ Filtering & Specification Logic:**\n| Capability | Logic |\n| :--- | :--- |\n| **Multi-field Search** | Scans `FirstName`, `LastName`, and `Email` simultaneously. |\n| **Soft-Delete View** | Toggle the `IsDeleted` parameter to audit deactivated accounts. |\n| **Server-side Sorting** | Optimized ordering by key identity properties. |\n\n#### **🔐 Access Requirements:**\n* **Admin Only**: This endpoint is protected and requires an Administrative bearer token.\n* **Performance**: Page size is strictly clamped between 1 and 10 to ensure API stability.",
+        "operationId": "GetAllUsers",
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortProp",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortProp"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ECommerce.BL.Specification.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IsDeleted",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.UserDTOs.UserDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                },
+                "example": {"pageSize":10,"pageIndex":1,"totalCount":50,"data":[{"id":"user_8812_guid","fName":"Jane","lName":"Smith","email":"jane.smith@corporate.com","isDeleted":false,"phoneNumber":"+15550100","address":"456 Industrial Ave, Houston"}]}
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users/GetUserById/{id}": {
+      "get": {
+        "tags": [
+          "5. User Management"
+        ],
+        "summary": "Retrieve a specific user profile",
+        "description": "### 👤 Individual Identity Inspection\n\nFetches the full profile details for a registered user using their unique Identity GUID. This endpoint is central to profile management and administrative user audits.\n\n#### **⚙️ Retrieval Workflow:**\n| Logic Step | Action |\n| :--- | :--- |\n| **Validation** | Checks if the provided string `id` is null or whitespace. |\n| **Identity Search** | Queries the `UserManager` to find the user in the ASP.NET Identity store. |\n| **Data Transformation** | Maps the `ApplicationUser` entity to a sanitized `UserDTO` to exclude sensitive data (like password hashes). |\n\n#### **🔐 Access Control:**\n* **Self-Access**: Users can typically view their own ID data.\n* **Administrative**: Admins use this to review customer details for order verification.",
+        "operationId": "GetUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.BL.DTO.UserDTOs.UserDTO"
+                },
+                "example": {"id":"guid-550e8400-e29b-41d4","fName":"John","lName":"Doe","email":"john.doe@industrial.com","isDeleted":false,"phoneNumber":"+12025550156","address":"123 Business Way, Sector 4, Houston"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Invalid user ID."}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"User not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users/UpdateUser/{id}": {
+      "put": {
+        "tags": [
+          "5. User Management"
+        ],
+        "summary": "Update existing user identity and profile",
+        "description": "### 🔄 Identity Synchronization\n\nUpdates a user's core identity details and contact information. This endpoint interacts directly with the **ASP.NET Identity System** to ensure security standards are maintained.\n\n#### **⚙️ Update Logic & Constraints:**\n| Rule | Action |\n| :--- | :--- |\n| **ID Match** | The `id` in the URL must strictly match the `Id` inside the JSON body to prevent accidental cross-user updates. |\n| **Null Handling** | Uses **Coalesce Logic** (`??`); fields left null in the request will retain their existing values in the database. |\n| **Email Sync** | Updating the `Email` automatically synchronizes the `NormalizedEmail` and `UserName` for login consistency. |\n\n#### **⚠️ Error Handling:**\n* **400 BadRequest**: Triggered if the Model State fails validation or if IDs do not match.\n* **404 Not Found**: Triggered if the Identity GUID does not exist in the store.",
+        "operationId": "UpdateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerce.BL.DTO.UserDTOs.UserDTO"
+              },
+              "example": {"id":"guid-550e8400-e29b-41d4","fName":"John","lName":"Updated","email":"john.updated@industrial.com","isDeleted":false,"phoneNumber":"+12025550199","address":"789 Industrial Blvd, Houston, TX"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"User updated successfully"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"User ID in URL does not match ID in request body."}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"User not found."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users/ToggleUserBlock/{id}/{isBlock}": {
+      "post": {
+        "tags": [
+          "5. User Management"
+        ],
+        "summary": "Manage User Access (Block/Unblock)",
+        "description": "### 🔐 Access Control Management\n\nToggles the `IsDeleted` flag for a specific user identity. This serves as a 'Soft Delete' or 'Ban' mechanism, preventing the user from accessing the platform without permanently deleting their data.\n\n#### **⚙️ State Transition Logic:**\n| Action | Target State | Logic |\n| :--- | :--- | :--- |\n| **Block** | `IsDeleted = true` | Disables login and API access for the user. |\n| **Unblock** | `IsDeleted = false` | Restores full account functionality. |\n\n#### **⚠️ Validation Guardrails:**\n* **Redundancy Check**: The API validates the current state. Attempting to block a user who is already blocked will return a **404/400 Conflict** message.\n* **Persistence**: Uses the **Identity Framework** to ensure the security stamp is updated and the user is effectively restricted.",
+        "operationId": "ToggleUserBlock",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isBlock",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"User blocked successfully"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"Invalid user ID."}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"message":"User is already blocked."}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerce.API.Swagger.CommonErrorExample.InternalServerError"
+                },
+                "example": {"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1","title":"An error occurred while processing your request.","status":500,"detail":"System.NullReferenceException: Object reference not set to an instance of an object...","traceId":"00-84a2f8c0-..."}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CloudinaryDotNet.Actions.ResourceType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ECommerce.API.Swagger.CommonErrorExample.InternalServerError": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "traceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AdminDataDTOs.AdminDataDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          },
+          "heroImage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AuthenticationDTOs.AuthenticationDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "roles": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AuthenticationDTOs.ChangePasswordDTO": {
+        "required": [
+          "newPassword",
+          "oldPassword",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "newPassword": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AuthenticationDTOs.ForgetPasswordDTO": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AuthenticationDTOs.LoginDTO": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AuthenticationDTOs.RegisterDTO": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "phoneNumber": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "address": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.AuthenticationDTOs.ResetPasswordDTO": {
+        "required": [
+          "email",
+          "password",
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.CategoryDTOs.CategoryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageThumbnailURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "imagePublicId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.DashboardDTOs.DashboardDTO": {
+        "type": "object",
+        "properties": {
+          "totalProducts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRentProducts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPurchaseProducts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRentAndPurchaseProducts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalNewOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalProcessingOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCompletedOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCancelledOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRentOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPurchaseOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSalesOrders": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.CategoryDTOs.CategoryDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ECommerce.BL.DTO.CategoryDTOs.CategoryDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.OrderDTOs.OrderDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ECommerce.BL.DTO.OrderDTOs.OrderDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.ProductDTOs.ProductDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ECommerce.BL.DTO.ProductDTOs.ProductDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.GlobalDTOs.PaginationResponse`1[[ECommerce.BL.DTO.UserDTOs.UserDTO, ECommerce.BL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ECommerce.BL.DTO.UserDTOs.UserDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.GlobalDTOs.ResultDTO": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CloudinaryDotNet.Actions.ResourceType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.OrderDTOs.CreateOrderDTO": {
+        "required": [
+          "address",
+          "email",
+          "name",
+          "phoneNumber",
+          "productId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "phoneNumber": {
+            "minLength": 1,
+            "type": "string",
+            "format": "tel"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rentalPeriod": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.OrderDTOs.OrderDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ECommerce.BL.DTO.OrderDTOs.OrderItemDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.OrderDTOs.OrderItemDTO": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "brand": {
+            "type": "string",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "nullable": true
+          },
+          "productStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "rentalPeriod": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.OrderDTOs.UpdateOrderDTO": {
+        "required": [
+          "id",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.ProductDTOs.ProductDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "additionalAttributes": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "brand": {
+            "type": "string",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainImageURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "imagePublicId": {
+            "type": "string",
+            "nullable": true
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "categoryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "confirmationStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "productMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ECommerce.BL.DTO.ProductDTOs.ProductMediaDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.ProductDTOs.ProductMediaDTO": {
+        "type": "object",
+        "properties": {
+          "mediaURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageThumbnailURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "mediaPublicId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mediaType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.DTO.UserDTOs.UserDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "fName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECommerce.BL.Specification.Enums.SortDirection": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ECommerce.BL.Specification.Enums.SortProp": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "1. Authentication & Security",
+      "description": "### 🔐 Identity & Access Control\n\nThis section manages user identity, secure onboarding, and account protection using ASP.NET Core Identity.\n\n#### **Available Operations:**\n* **User Onboarding**: Handled via `Register` to create new profiles and assign roles.\n* **Secure Login**: Verifies credentials and issues a **JWT Bearer Token** for session management.\n* **Account Recovery**: Includes `ForgetPassword` and `ResetPassword` flows using secure email tokens.\n* **Credential Management**: Allows authenticated users to perform a `ChangePassword` operation.\n\n#### **🛡️ Security Standards:**\n| Feature | Implementation |\n| :--- | :--- |\n| **Authentication** | JWT Bearer Strategy |\n| **Password Storage** | PBKDF2 with HMAC-SHA256 Hashing |\n| **Authorization** | Role-Based Access Control (RBAC) |\n\n> **Tip:** All protected endpoints require the token in the header as: `Authorization: Bearer {your_token}`."
+    },
+    {
+      "name": "2. Catalog & Products",
+      "description": "### 📦 Inventory & Heavy Machinery Catalog\n\nThe core engine for browsing, filtering, and managing industrial equipment and heavy machinery inventory.\n\n#### **Catalog Infrastructure:**\n| Component | Primary Responsibility | Technical Integration |\n| :--- | :--- | :--- |\n| **ProductsController** | Lifecycle of machinery (CRUD), Multi-media handling. | Cloudinary & Local Storage |\n| **CategoriesController** | Hierarchical organization of equipment types. | Specification Pattern |\n| **BrandsController** | Discovery of global manufacturers (CAT, Komatsu, etc.). | SQL Distinct Extraction |\n\n#### **🏗️ Operational Features:**\n* **Advanced Discovery**: High-performance searching and filtering via `ProductParams` (Model, Status, Brand).\n* **Rich Media Support**: Integrated support for Images, Demo Videos (.mp4), and Technical PDF Brochures.\n* **Dynamic Specs**: Support for flexible technical attributes stored as JSON strings.\n\n> **Tip:** Use the `GetAllProducts` endpoint with the `Search` parameter for broad queries across names and descriptions."
+    },
+    {
+      "name": "3. Sales & Order Lifecycle",
+      "description": "### 🛒 Transactional Engine & Order Fulfillment\n\nThe central hub for processing customer intent and converting digital carts into verified industrial orders.\n\n#### **Core Infrastructure:**\n| Module | Operational Responsibility | Logic |\n| :--- | :--- | :--- |\n| **Checkout Engine** | Purchase & Rental fulfillment. | Validates stock and calculates terms. |\n| **Order Tracking** | Real-time lifecycle monitoring. | Mapped via English/Arabic status labels. |\n| **Inventory Sync** | Automated Stock Deduction. | Synchronizes `Quantity` post-confirmation. |\n\n#### **🏗️ Fulfillment Features:**\n* **Multi-Channel Alerts**: Automated high-priority notifications sent via **Twilio (WhatsApp)** and **SMTP (Email)** to administrators.\n* **Machinery Specifications**: Captures detailed rental periods, brand specifics, and model versions per transaction.\n* **Audit Trail**: Detailed logging of order creation, status transitions, and deletion events for security compliance.\n\n> **Note:** All order statuses are strictly managed via an internal state machine to ensure data integrity across the sales funnel."
+    },
+    {
+      "name": "4. Administrative Control",
+      "description": "### 🛠️ Central Governance & Operations\n\nThe command center for system administrators to monitor performance, validate content, and manage global configurations.\n\n#### **Administrative Modules:**\n* **Site Branding**: Managed via `AdminDataController` to update store titles, logos, and hero sections with Cloudinary integration.\n* **Content Validation**: Handled by `ConfirmationStatusController` to oversee the approval workflow for products and orders.\n* **Business Intelligence**: Provided by `DashboardController`, delivering real-time analytics on sales, user growth, and inventory.\n\n#### **📊 Governance Metrics:**\n| Module | Access Level | Primary Storage |\n| :--- | :--- | :--- |\n| **Global Settings** | Admin Only | SQL Server & Cloudinary |\n| **Approvals** | Moderator/Admin | `ConfirmationStatus` Table |\n| **Analytics** | Admin Only | In-Memory / DB Aggregates |\n\n> **Security Policy:** All operations in this section enforce strict `Role: Admin` requirements. Unauthorized attempts are logged via Serilog."
+    },
+    {
+      "name": "5. User Management",
+      "description": "### 👥 Identity & Access Governance\n\nThe administrative module dedicated to managing user lifecycles, account security, and role-based access control (RBAC).\n\n#### **Core Capabilities:**\n| Controller | Primary Function | Security Layer |\n| :--- | :--- | :--- |\n| **UsersController** | Global directory, Profile updates, & Soft-deletion. | ASP.NET Identity Core |\n| **Access Control** | Toggling block status and managing account states. | Role-Based Authorization |\n\n#### **🛡️ Administrative Governance:**\n* **Identity Synchronization**: Ensures consistency between emails, usernames, and normalized identity fields.\n* **Soft-Delete (Blocking)**: Allows administrators to restrict platform access via the `IsDeleted` flag without data loss.\n* **Audit-Ready Data**: Provides paginated and searchable user records optimized for large-scale CRM operations.\n\n> **Security Note:** All endpoints in this section strictly enforce `Admin` role requirements to protect sensitive customer PII (Personally Identifiable Information)."
+    }
+  ]
+}
